@@ -34,3 +34,17 @@ class Board:
     def get_board_state(self):
         """Return the current state of the board."""
         return self.board
+    
+    def get_free_cells(self):
+        """Return a list of free cells on the board."""
+        return [(row_idx, col_idx) 
+                for row_idx in range(len(self.board)) 
+                for col_idx in range(len(self.board[row_idx])) 
+                if self.board[row_idx][col_idx] == EMPTY_CELL]
+    
+    def is_full(self) -> bool:
+        """Check if the board is full (no free cells)."""
+        isFull = False if self.get_free_cells() else True
+        return isFull
+
+        
