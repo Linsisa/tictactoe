@@ -1,39 +1,44 @@
 """Board implementation for the Tic Tac Toe game."""
 
-from config.settings import BOARD_SIZE, EMPTY_CELL
+from config.settings import EMPTY_CELL
 
 class Board:
     """Class representing the game board for Tic Tac Toe."""
 
-    def __init__(self):
+    def __init__(self, size: int):
         """Initialize the game board with empty cells."""
-        self.board: list[list[str | None]] = [[EMPTY_CELL for _ in range(BOARD_SIZE)] for _ in range(BOARD_SIZE)]
+        self.size = size
+        self.board: list[list[str | None]] = [[EMPTY_CELL for _ in range(size)] for _ in range(size)]
 
     def reset_board(self):
         """Reset the game board to its initial empty state."""
-        self.board = [[EMPTY_CELL for _ in range(BOARD_SIZE)] for _ in range(BOARD_SIZE)]
+        self.board = [[EMPTY_CELL for _ in range(self.size)] for _ in range(self.size)]
 
-    def make_move(self, row: int, col: int, symbol: str) -> bool:
+    def apply_move(self, move: tuple[int, int], symbol: str) -> bool:
         """
         Place a symbol on the board at the specified position.
 
         Args:
-            row (int): The row index where the symbol should be placed.
-            col (int): The column index where the symbol should be placed.
+            move (tuple[int, int]): The row and column indices for the move.
             symbol (str): The symbol to place on the board (e.g., 'X' or 'O').
 
         Returns:
             bool: True if the move was successful, False if the cell is already occupied.
         """
+        row, col = move
 
         if self.board[row][col] == EMPTY_CELL:
             self.board[row][col] = symbol
             return True
         return False
 
-    def get_board_state(self):
+    def get_current_board(self):
         """Return the current state of the board."""
         return self.board
+    
+    def get_cell(self, row: int, col: int) -> str | None:
+        """Return the value of a specific cell on the board."""
+        return self.board[row][col]
     
     def get_free_cells(self):
         """Return a list of free cells on the board."""
