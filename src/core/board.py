@@ -51,5 +51,8 @@ class Board:
         """Check if the board is full (no free cells)."""
         isFull = False if self.get_free_cells() else True
         return isFull
-
-        
+    
+    def is_position_in_bounds(self, position: tuple[int, int]) -> bool:
+        """Check if a given position is within the bounds of the board."""
+        row, col = position
+        return 0 <= row < self.size and 0 <= col < self.size
