@@ -1,19 +1,19 @@
 """File containing UI configuration constants for the Streamlit app."""
 
-symbols = {
+DISPLAY_SYMBOLS = {
     "X": "❌",
     "O": "⭕",
-    "empty": "➖" # This symbol represents an empty cell in the tic tac toe grid 🗆
+    None: "➖" # This symbol represents an empty cell in the tic tac toe grid 🗆
 }
 
-ui_messages = {
+UI_MESSAGES = {
     "page_title": "Tic Tac Toe Game",
     "page_icon": "🎮​",
     "header_title": "🎮​ Tic Tac Toe Game",
     "header_subtitle": "Play the classic Tic Tac Toe game!"
 }
 
-custom_css = \
+CUSTOM_CSS = \
     """<style>
         /* Custom CSS to style the Streamlit app */
         .stMainBlockContainer {
