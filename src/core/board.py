@@ -8,11 +8,11 @@ class Board:
     def __init__(self, size: int):
         """Initialize the game board with empty cells."""
         self.size = size
-        self.board: list[list[str | None]] = [[EMPTY_CELL for _ in range(size)] for _ in range(size)]
+        self.reset_board()
 
     def reset_board(self):
         """Reset the game board to its initial empty state."""
-        self.board = [[EMPTY_CELL for _ in range(self.size)] for _ in range(self.size)]
+        self.board: list[list[str | None]] = [[EMPTY_CELL for _ in range(self.size)] for _ in range(self.size)]
 
     def apply_move(self, move: tuple[int, int], symbol: str) -> bool:
         """
@@ -23,11 +23,11 @@ class Board:
             symbol (str): The symbol to place on the board (e.g., 'X' or 'O').
 
         Returns:
-            bool: True if the move was successful, False if the cell is already occupied.
+            bool: True if the move was successful, False if the cell is already occupied or the position is out of bounds.
         """
         row, col = move
 
-        if self.board[row][col] == EMPTY_CELL:
+        if self.is_position_in_bounds(move) and self.board[row][col] == EMPTY_CELL:
             self.board[row][col] = symbol
             return True
         return False
