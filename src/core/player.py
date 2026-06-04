@@ -1,7 +1,6 @@
 """Player class representing a player in the Tic Tac Toe game."""
 
 from dataclasses import dataclass
-
 from core.strategies import Strategy
 
 
