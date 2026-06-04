@@ -1,10 +1,10 @@
 """File of the GameManager class, which manages the overall game flow and state for the Tic Tac Toe game."""
 
+from config.settings import SYMBOL_X
 from core.board import Board
 from core.player import Player
 from core.rules import check_winner, check_draw
 from core.strategies import HumanStrategy
-from config.settings import SYMBOL_X
 
 
 class GameManager:
