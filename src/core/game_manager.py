@@ -108,3 +108,7 @@ class GameManager:
         """Select the player with the 'X' symbol as the starting player."""
         starting_player = 0 if self.players[0].symbol == SYMBOL_X else 1
         return starting_player
+    
+    def get_current_board_state(self) -> list[list[str | None]]:
+        """Return the current state of the board as a 2D list."""
+        return self.board.get_current_board()
