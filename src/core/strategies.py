@@ -36,6 +36,8 @@ class RandomAIStrategy(Strategy):
     Returns:
         tuple[int, int]: The row and column indices of the selected move.
     """
-    def get_move(self, board: Board) -> tuple[int, int]:
-        """Select a random valid move from the available cells on the board."""        
+    def get_move(self, board: Board) -> tuple[int, int] | None:
+        """Select a random valid move from the available cells on the board."""
+        if not board.get_free_cells():
+            return None  # No moves available
         return random.choice(board.get_free_cells())
