@@ -1,6 +1,6 @@
 """File containing UI configuration constants for the Streamlit app."""
 
-BOARDS_SYMBOLS = {
+BOARD_SYMBOLS = {
     "X": "❌",
     "O": "⭕",
     None: "➖" # This symbol represents an empty cell in the tic tac toe grid 🗆
