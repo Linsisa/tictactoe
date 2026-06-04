@@ -1,4 +1,4 @@
-"""File containing tests for the rules and logic of the Tic Tac Toe game."""
+"""File of tests for the rules and logic of the Tic Tac Toe game."""
 
 import pytest
 import core.rules as rules
