@@ -39,14 +39,14 @@ class GameManager:
     def play_turn(self, position: tuple[int, int] | None = None) -> bool:
         """
         Play a turn for the current player.
-        - If the current player is human, `move` should be provided by the UI.
-        - If it's the AI, `move` can be None and will be chosen by the strategy.
+        - If the current player is human, `position` should be provided by the UI.
+        - If it's the AI, `position` can be None and will be chosen by the strategy.
 
         Args:
             position (tuple[int, int] | None): The row and column indices for the move, or None for AI.
 
         Returns:
-            bool: True if the move was played, False otherwise.
+            bool: True if the player move was played, False otherwise.
         """
         # Stop if the game is over, no more moves can be played.
         if self.game_over:
