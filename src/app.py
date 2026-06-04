@@ -9,13 +9,12 @@ from config.ui import HUMAN_PLAYER_NAME, AI_PLAYER_NAME, UI_MESSAGES, CUSTOM_CSS
 from core.game_manager import GameManager
 from core.player import Player
 from core.strategies import HumanStrategy, RandomAIStrategy
-from ui.components import render_board, render_game_over
+from ui.components import render_side_options, render_board, render_game_over
 
 
 ### Setup functions
 def setup_main_page() -> None:
     """Set up the main page configuration and title for the Streamlit app."""
-
     st.set_page_config(
         page_title=UI_MESSAGES["page_title"],
         page_icon=UI_MESSAGES["page_icon"],
@@ -23,6 +22,7 @@ def setup_main_page() -> None:
         initial_sidebar_state="auto",
     )
 
+    sty.init()  # Initialize st_yled for enhanced styling capabilities
     st.html(CUSTOM_CSS)  # Apply custom CSS style to the app
     
     sty.title(UI_MESSAGES["header_title"], text_alignment="center")
@@ -38,26 +38,14 @@ def init_session_state() -> None:
     """
     if "game" not in st.session_state:
         st.session_state.game = None
-    if "human_symbol" not in st.session_state:
-        st.session_state.human_symbol = None
+    if "options" not in st.session_state:
+        st.session_state.options = None
 
 
 ### Rendering functions
 def refresh_app_rendering() -> None:
     """Refresh the Streamlit app rendering to reflect changes in the game state."""
     st.rerun()
-
-
-def render_symbol_choice() -> None:
-    """Small section to render the symbol choice screen for the user at the start of the game."""
-    st.subheader(UI_MESSAGES["choose_symbol"])
-    col1, col2 = st.columns(2)
-    with col1:
-        if st.button(SYMBOL_X, use_container_width=True):
-            _start_game(human_symbol=SYMBOL_X)
-    with col2:
-        if st.button(SYMBOL_O, use_container_width=True):
-            _start_game(human_symbol=SYMBOL_O)
 
 
 def render_current_turn(game: GameManager) -> None:
@@ -125,10 +113,10 @@ def handle_human_turn(game: GameManager, clicked_position: tuple[int, int]) -> N
     refresh_app_rendering()
 
 
-### Game initialization function
-def _start_game(human_symbol: str) -> None:
+### Game functions
+def start_game(human_symbol: str) -> None:
     """
-    Initialize the game with 2 players (human and AI) based on the symbol chosen by the user, then refresh the app rendering to start the game.
+    Initialize the game with 2 players (human and AI) based on the symbol chosen by the user
 
     Args:
         human_symbol (str): The symbol chosen by the user for the human player.
@@ -141,26 +129,48 @@ def _start_game(human_symbol: str) -> None:
 
     # X always starts first, _define_starting_player handles this in GameManager
     st.session_state.game = GameManager(player_1, player_2, BOARD_SIZE, WIN_LENGTH)
-    st.session_state.human_symbol = human_symbol
-    refresh_app_rendering()  # Refresh the app to start the game immediately after symbol choice
+
+
+def is_game_in_progress() -> bool:
+    """Return True if a game is currently in progress, False otherwise."""
+    return game_exists() and not st.session_state.game.game_over
+
+
+def game_exists() -> bool:
+    """Return True if a game exists in session state, False otherwise."""
+    return st.session_state.game is not None
+
+
+def should_start_new_game() -> bool:
+    """Return True if the conditions to start a new game are met, False otherwise."""
+    return st.session_state.options is not None and not is_game_in_progress()
 
 
 def main():
     """
     Main function to run the Tic Tac Toe Game Streamlit app.
     """
-
-    # Initialize st_yled for enhanced styling capabilities
-    sty.init()
-
     # Configure the main page and initialize session state variables
     setup_main_page()
     init_session_state()
 
-    if st.session_state.game is None:
-        render_symbol_choice()  # Show symbol choice screen if the game has not started
-    else:
-        render_game()  # Show the main game screen if the game has started
+    render_side_options(is_game_in_progress())  
+
+    if should_start_new_game():
+        selected_symbol = st.session_state.options["player_symbol"]
+        st.session_state.options = None
+        start_game(selected_symbol)
+        refresh_app_rendering()
+        return
+
+    if not game_exists():
+        sty.text(UI_MESSAGES["choose_options"],
+                font_size="1.25rem", 
+                color="#6B7280"
+                )
+        return
+    
+    render_game()
 
 
 if __name__ == "__main__":
