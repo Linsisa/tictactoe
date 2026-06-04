@@ -21,6 +21,9 @@ UI_MESSAGES = {
     "header_subtitle": "Play the classic Tic Tac Toe game!",
     "choose_symbol": "Choose your symbol to start the game:",
     "current_turn": "Current turn:",
+    "draw": "It's a draw!",
+    "victory": "{} wins! Symbol: {}",
+    "play_again": "Play Again"
 }
 
 CUSTOM_CSS = \
