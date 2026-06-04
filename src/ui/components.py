@@ -3,9 +3,42 @@
 import streamlit as st
 
 from config.ui import ICONS, UI_MESSAGES
+from config.settings import SYMBOL_X, SYMBOL_O
 from core.game_manager import GameManager
 
 
+### SIDEBAR OPTIONS RENDERING
+def render_side_options(game_in_progress: bool) -> None:
+    """
+    Render the game options for the user to select game options by registering in session state.
+
+    Args:
+        game_in_progress (bool): A boolean indicating whether a game is in progress.
+    """
+
+    with st.sidebar:
+        st.sidebar.title(UI_MESSAGES["options_title"])
+
+        st.subheader(UI_MESSAGES["symbol_options"])
+        player_symbol = st.sidebar.selectbox(
+            label=UI_MESSAGES["choose_symbol"],
+            key="player_symbol",
+            options=[SYMBOL_X, SYMBOL_O],
+            disabled=game_in_progress
+        )
+
+        st.divider()
+        if st.button(
+            label=UI_MESSAGES["launch"],
+            key="launch_button",
+            disabled=game_in_progress
+        ):
+            st.session_state.options = {
+                "player_symbol": player_symbol
+            }
+
+
+### BOARD RENDERING
 def render_board(game: GameManager) -> tuple[int, int] | None:
     """
     Render the game board using Streamlit.
@@ -17,37 +50,40 @@ def render_board(game: GameManager) -> tuple[int, int] | None:
         tuple[int, int] | None: The position of the cell clicked by the user,
         or None if no cell was clicked.
     """
-
     # Get the current state of the board from the game manager and determine the size of the board
     board = game.get_current_board_state()
     row_num = len(board)
     col_num = len(board[0]) if board else 0
 
     is_human_turn = game.is_current_player_human()
+    disable_buttons = game.game_over or not is_human_turn
 
-    disable_buttons = (
-        game.game_over 
-        or not is_human_turn
-    )
+    col_gauche, col_centre, col_droite = st.columns([3, 2, 3])
 
-    # Render the board as a grid of buttons
-    for row in range(row_num):
-        cols = st.columns(col_num) 
+    clicked_cell = None
 
-        for col in range(col_num):
-            cell_value = board[row][col]
-            with cols[col]:
-                if st.button(
-                    label=cell_value if cell_value else " ",
-                    key=f"cell_{row}_{col}",
-                    width=40,
-                    disabled=disable_buttons
-                ):
-                    return (row, col)
+    st.html("<div class='tictactoe-board'>")  # Add a wrapper div with a specific class for styling
+    with col_centre:
+        # Render the board as a grid of buttons
+        for row in range(row_num):
+            cols = st.columns(col_num) 
 
-    return None
+            for col in range(col_num):
+                cell_value = board[row][col]
+                with cols[col]:
+                    if st.button(
+                        label=cell_value if cell_value else " ",
+                        key=f"cell_{row}_{col}",
+                        width=40,
+                        disabled=disable_buttons
+                    ):
+                        clicked_cell = (row, col)
+    st.html("</div>")  # Close the wrapper div
+
+    return clicked_cell
 
 
+## GAME OVER SECTION RENDERING
 def render_game_over(game: GameManager) -> None:
     """
     Render the end game screen with the result of the game and the option to replay.
@@ -61,6 +97,6 @@ def render_game_over(game: GameManager) -> None:
     else:
         st.info(UI_MESSAGES["draw"], icon=ICONS["draw"])
 
-    if st.button(UI_MESSAGES["play_again"]):
+    if st.button(UI_MESSAGES["quick_restart"]):
         game.reset_game()
         st.rerun()
