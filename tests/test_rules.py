@@ -8,6 +8,7 @@ from config.settings import BOARD_SIZE_TEST
 
 
 class TestRules:
+    """Test class for the rules and logic of the Tic Tac Toe game."""
 
     ### Tests for check_winner function ###
     @pytest.mark.parametrize("board_state, last_move, expected_winner", [
