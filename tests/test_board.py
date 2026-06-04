@@ -1,7 +1,7 @@
 """Test file for the board Class"""
 
 from core.board import Board, EMPTY_CELL
-from config.settings import BOARD_SIZE
+from config.settings import BOARD_SIZE_TEST
 
 
 class TestBoard:
@@ -10,11 +10,11 @@ class TestBoard:
     # Define method executed before each test method
     def setup_method(self):
         """Set up a new board instance before each test."""
-        self.board = Board(size=BOARD_SIZE)
+        self.board = Board(size=BOARD_SIZE_TEST)
 
     def test_board_initialization(self):
         """Test that the board created by the Board class is initialized correctly."""
-        expected_board = [[EMPTY_CELL for _ in range(BOARD_SIZE)] for _ in range(BOARD_SIZE)]
+        expected_board = [[EMPTY_CELL for _ in range(BOARD_SIZE_TEST)] for _ in range(BOARD_SIZE_TEST)]
 
         assert self.board.get_current_board() == expected_board
 
@@ -25,7 +25,7 @@ class TestBoard:
 
         self.board.reset_board()
 
-        expected_board = [[EMPTY_CELL for _ in range(BOARD_SIZE)] for _ in range(BOARD_SIZE)]
+        expected_board = [[EMPTY_CELL for _ in range(BOARD_SIZE_TEST)] for _ in range(BOARD_SIZE_TEST)]
         assert self.board.get_current_board() == expected_board
 
     ### Apply move tests ###
@@ -63,7 +63,7 @@ class TestBoard:
         position_out_of_bounds_negative = (-1, -1)  # This position is out of bounds
         result_1 = self.board.apply_move(position_out_of_bounds_negative, "X")
 
-        position_out_of_bounds_positive = (BOARD_SIZE, BOARD_SIZE)  # This position is out of bounds
+        position_out_of_bounds_positive = (BOARD_SIZE_TEST, BOARD_SIZE_TEST)  # This position is out of bounds
         result_2 = self.board.apply_move(position_out_of_bounds_positive, "X")
 
         assert result_1 is False
@@ -97,8 +97,8 @@ class TestBoard:
     def test_get_free_cells_full_board(self):
         """Test that the get_free_cells method returns an empty list when the board is full."""
         # Fill the board completely
-        for row in range(BOARD_SIZE):
-            for col in range(BOARD_SIZE):
+        for row in range(BOARD_SIZE_TEST):
+            for col in range(BOARD_SIZE_TEST):
                 self.board.apply_move((row, col), "X")
 
         assert self.board.get_free_cells() == []
@@ -118,8 +118,8 @@ class TestBoard:
     def test_is_full_full_board(self):
         """Test that the is_full method returns True for a full board."""
         # Fill the board completely
-        for row in range(BOARD_SIZE):
-            for col in range(BOARD_SIZE):
+        for row in range(BOARD_SIZE_TEST):
+            for col in range(BOARD_SIZE_TEST):
                 self.board.apply_move((row, col), "X")
 
         assert self.board.is_full() is True
@@ -135,5 +135,5 @@ class TestBoard:
         """Test that the is_position_in_bounds method returns False for invalid positions."""
         assert self.board.is_position_in_bounds((-1, 0)) is False
         assert self.board.is_position_in_bounds((0, -1)) is False
-        assert self.board.is_position_in_bounds((BOARD_SIZE, 0)) is False
-        assert self.board.is_position_in_bounds((0, BOARD_SIZE)) is False
+        assert self.board.is_position_in_bounds((BOARD_SIZE_TEST, 0)) is False
+        assert self.board.is_position_in_bounds((0, BOARD_SIZE_TEST)) is False
