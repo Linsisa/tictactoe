@@ -51,15 +51,15 @@ class GameManager:
         # Stop if the game is over, no more moves can be played.
         if self.game_over:
             return False
-        
-        player = self.get_current_player()
+    
         
         # Second step, get the move from the current player strategy. 
         # If it's a human player, the move should come from the UI,
         # so we use the `position` argument. 
         # If it's an AI player, we call the `get_move` method of the 
         # player's strategy to determine the move chosen by the AI.
-        if isinstance(player.strategy, HumanStrategy):
+        player = self.get_current_player()
+        if self.is_current_player_human():
             if position is None:
                 return False
             move = position 
@@ -99,6 +99,11 @@ class GameManager:
     def get_current_player(self) -> Player:
         """Return the current player."""
         return self.players[self.current_player_index]
+    
+    def is_current_player_human(self) -> bool:
+        """Return True if the current player is a human player, False otherwise."""
+        player = self.get_current_player()
+        return isinstance(player.strategy, HumanStrategy)
 
     def _switch_player(self) -> None:
         """Switch the current player to the other player."""
