@@ -1,6 +1,5 @@
 """File containing the rules and logic for the Tic Tac Toe game."""
 
-
 from core.board import Board
 
 
