@@ -19,11 +19,15 @@ UI_MESSAGES = {
     "page_icon": "🎮​",
     "header_title": "🎮​ Tic Tac Toe Game",
     "header_subtitle": "Play the classic Tic Tac Toe game!",
-    "choose_symbol": "Choose your symbol to start the game:",
+    "choose_options": "Choose options in the sidebar to launch the game",
+    "choose_symbol": "Choose your symbol:",
+    "symbol_options": "Symbol options:",
     "current_turn": "Current turn:",
     "draw": "It's a draw!",
     "victory": "{} wins! Symbol: {}",
-    "play_again": "Play Again"
+    "launch": "Launch Game",
+    "quick_restart": "↻ Quick Restart",
+    "options_title": "⚙️ Game Options"
 }
 
 CUSTOM_CSS = \
