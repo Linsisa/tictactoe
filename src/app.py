@@ -12,7 +12,7 @@ from core.strategies import HumanStrategy, RandomAIStrategy
 from ui.components import render_rules, render_side_options, render_board, render_game_over
 
 
-### Setup functions
+### Setup functions ###
 def setup_main_page() -> None:
     """Set up the main page configuration and title for the Streamlit app."""
     st.set_page_config(
@@ -44,7 +44,7 @@ def init_session_state() -> None:
         st.session_state.options = None
 
 
-### Rendering functions
+### Rendering functions ###
 def refresh_app_rendering() -> None:
     """Refresh the Streamlit app rendering to reflect changes in the game state."""
     st.rerun()
@@ -84,7 +84,7 @@ def render_game() -> None:
         render_game_over(game)
 
 
-### Turn handling functions
+### Turn handling functions ###
 def handle_ai_turn(game: GameManager) -> None:
     """
     Make AI play if it's AI's turn and the game is not over, then refresh the app rendering.
@@ -115,7 +115,7 @@ def handle_human_turn(game: GameManager, clicked_cell: tuple[int, int]) -> None:
     refresh_app_rendering()
 
 
-### Game functions
+### Game functions ###
 def start_game(human_symbol: str) -> None:
     """
     Initialize the game with 2 players (human and AI) based on the symbol chosen by the user
@@ -147,7 +147,7 @@ def should_start_new_game() -> bool:
     """Return True if the conditions to start a new game are met, False otherwise."""
     return st.session_state.options is not None and not is_game_in_progress()
 
-
+### MAIN APP FUNCTION ###
 def main():
     """
     Main function to run the Tic Tac Toe Game Streamlit app.
