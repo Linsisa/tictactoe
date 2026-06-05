@@ -59,7 +59,7 @@ def render_board(game: GameManager) -> tuple[int, int] | None:
     disable_buttons = game.game_over or not is_human_turn
 
 
-    padding = max(1, 8 - col_num)
+    padding = max(1, 10 - col_num)  # Adjust padding based on the number of columns
     col_gauche, col_centre, col_droite = st.columns([padding, col_num, padding])
 
     clicked_cell = None
@@ -76,11 +76,11 @@ def render_board(game: GameManager) -> tuple[int, int] | None:
                     if st.button(
                         label=cell_value if cell_value else " ",
                         key=f"cell_{row}_{col}",
-                        width=40,
-                        disabled=disable_buttons
+                        disabled=disable_buttons,
+                        use_container_width=True
                     ):
                         clicked_cell = (row, col)
-    st.html("</div>")  # Close the wrapper div
+    st.html("</div>") 
 
     return clicked_cell
 
