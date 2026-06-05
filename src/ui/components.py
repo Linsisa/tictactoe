@@ -61,38 +61,73 @@ def render_board(game: GameManager) -> tuple[int, int] | None:
         tuple[int, int] | None: The position of the cell clicked by the user,
         or None if no cell was clicked.
     """
-    # Get the current state of the board from the game manager and determine the size of the board
+    disable_cells = _disable_buttons(game)
+    
+    # Create colomns for centering the board, with dynamic padding based on the number of columns in the board
+    _, col_centre, _ = st.columns(_get_layout_portion_for_columns(game))
+
+    with col_centre:
+        return _render_board_grid(game, disable_cells)
+
+
+def _disable_buttons(game: GameManager) -> bool:
+    """
+    Determine whether the buttons on the game board should be disabled based on the current game state.
+
+    Args:
+        game (GameManager): The current game manager instance containing the game state.
+
+    Returns:
+        bool: A boolean indicating whether the buttons should be disabled.
+    """
+    is_human_turn = game.is_current_player_human()
+    return game.game_over or not is_human_turn
+
+
+def _get_layout_portion_for_columns(game: GameManager) -> tuple[int, int]:
+    """
+    Calculate the layout portion for the display based on the number of columns in the board.
+
+    Args:
+        game (GameManager): The current game manager instance containing the game state.
+
+    Returns:
+        tuple[int, int]: A tuple containing the layout portion for the center column and the padding.
+    """
+    col_num = len(game.get_current_board_state()[0]) if game.get_current_board_state() else 0
+    padding = max(1, 8 - col_num)  # Adjust padding based on the number of columns
+    return [padding, col_num, padding]
+
+
+def _render_board_grid(game: GameManager, disable_cells: bool) -> None:
+    """
+    Render the game board as a grid of buttons.
+
+    Args:
+        game (GameManager): The current game manager instance containing the game state.
+        disable_cells (bool): A boolean indicating whether the cells should be disabled.
+    """
     board = game.get_current_board_state()
     row_num = len(board)
     col_num = len(board[0]) if board else 0
 
-    is_human_turn = game.is_current_player_human()
-    disable_buttons = game.game_over or not is_human_turn
-
-
-    padding = max(1, 8 - col_num)  # Adjust padding based on the number of columns
-    _, col_centre, _ = st.columns([padding, col_num, padding])
-
     clicked_cell = None
-
     st.html("<div class='tictactoe-board'>")  # Add a wrapper div with a specific class for styling
-    with col_centre:
-        # Render the board as a grid of buttons
-        for row in range(row_num):
-            cols = st.columns(col_num) 
+    for row in range(row_num):
+        cols = st.columns(col_num) 
 
-            for col in range(col_num):
-                cell_value = BOARD_SYMBOLS.get(board[row][col])  # Display the UI symbol based on the board value
-                
-                with cols[col]:
-                    if st.button(
+        for col in range(col_num):
+            cell_value = BOARD_SYMBOLS.get(board[row][col])  # Display the UI symbol based on the board value
+            
+            with cols[col]:
+                if st.button(
                         label=cell_value if cell_value else " ",
                         key=f"cell_{row}_{col}",
-                        disabled=disable_buttons,
+                        disabled=disable_cells,
                         use_container_width=True
                     ):
                         clicked_cell = (row, col)
-    st.html("</div>") 
+    st.html("</div>")
 
     return clicked_cell
 
