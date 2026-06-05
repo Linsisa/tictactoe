@@ -9,7 +9,7 @@ from config.ui import HUMAN_PLAYER_NAME, AI_PLAYER_NAME, UI_MESSAGES, CUSTOM_CSS
 from core.game_manager import GameManager
 from core.player import Player
 from core.strategies import HumanStrategy, RandomAIStrategy
-from ui.components import render_side_options, render_board, render_game_over
+from ui.components import render_rules, render_side_options, render_board, render_game_over
 
 
 ### Setup functions
@@ -27,6 +27,8 @@ def setup_main_page() -> None:
     
     sty.title(UI_MESSAGES["header_title"])
     sty.subheader(UI_MESSAGES["header_subtitle"], color="#6B7280", font_size="1rem")
+
+    render_rules()  # Render the game rules expander at the top of the page
     st.markdown("---")  # Add a horizontal divider after the header section
 
 

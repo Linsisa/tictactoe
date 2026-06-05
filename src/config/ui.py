@@ -19,6 +19,7 @@ UI_MESSAGES = {
     "page_icon": "🎮​",
     "header_title": "🎮​ Tic Tac Toe Game",
     "header_subtitle": "Play the classic Tic Tac Toe game!",
+    "rules_expander": "📜 Game Rules",
     "choose_options": "Choose options in the sidebar to launch the game",
     "choose_symbol": "Choose your symbol:",
     "symbol_options": "Symbol options:",
@@ -30,6 +31,16 @@ UI_MESSAGES = {
     "quick_restart": "↻ Quick Restart",
     "options_title": "⚙️ Game Options"
 }
+
+GAME_RULES = """
+1. The game is played on a 3x3 grid.
+2. You can choose to play as either {} or {}. The player with {} always goes first.
+3. Players take turns placing their symbol in an empty cell on the grid.
+4. The first player to get three of their symbols in a row (horizontally, vertically, or diagonally) wins the game.
+5. If all cells are filled and no player has three in a row, the game is a draw.
+6. You can restart the game at any time by clicking the "Quick Restart" after the game ends. Or you can change your symbol and launch a new game from the sidebar options.
+7. Enjoy playing and have fun!
+"""
 
 CUSTOM_CSS = \
     """<style>

@@ -2,9 +2,18 @@
 
 import streamlit as st
 
-from config.ui import ICONS, UI_MESSAGES, BOARD_SYMBOLS
+from config.ui import BOARD_SYMBOLS, ICONS, UI_MESSAGES, GAME_RULES
 from config.settings import SYMBOL_X, SYMBOL_O
 from core.game_manager import GameManager
+
+
+### RULES RENDERING
+def render_rules() -> None:
+    """
+    Render the game rules in a expander on the main page of the application, allowing users to understand how to play the game and what the rules are.
+    """
+    with st.expander(UI_MESSAGES["rules_expander"]):
+        st.text(GAME_RULES.format(BOARD_SYMBOLS[SYMBOL_X], BOARD_SYMBOLS[SYMBOL_O], BOARD_SYMBOLS[SYMBOL_X]))
 
 
 ### SIDEBAR OPTIONS RENDERING
@@ -62,7 +71,7 @@ def render_board(game: GameManager) -> tuple[int, int] | None:
 
 
     padding = max(1, 8 - col_num)  # Adjust padding based on the number of columns
-    col_gauche, col_centre, col_droite = st.columns([padding, col_num, padding])
+    _, col_centre, _ = st.columns([padding, col_num, padding])
 
     clicked_cell = None
 
