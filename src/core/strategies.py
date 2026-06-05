@@ -6,6 +6,8 @@ from core.board import Board
 
 class Strategy():
     """Base class for move strategies in the Tic Tac Toe game."""
+    is_human: bool = False
+
     def get_move(self, board: Board) -> tuple[int, int] | None:
         """Method to be implemented by subclasses to determine the next move."""
         raise NotImplementedError("Subclasses must implement this method.")
@@ -21,6 +23,8 @@ class HumanStrategy(Strategy):
     Returns:
         None: The actual move will come from the UI, so this strategy returns None.
     """
+    is_human: bool = True
+
     def get_move(self, board: Board) -> None:
         """Get the move from the user interface."""
         return None
