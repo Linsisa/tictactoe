@@ -100,9 +100,9 @@ The app will open at `http://localhost:8501` in your browser.
 
 
 ---
-### Run live version on Streamlit Cloud
+<!-- ### Run live version on Streamlit Cloud
 
-A live version of the app is available on Streamlit Cloud. Click the link below to explore the features without any setup.  
+A live version of the app is available on Streamlit Cloud. Click the link below to explore the features without any setup.   -->
 
 <!-- [Try the Live Demo](https://tictactoe-linsisa.streamlit.app/) -->
 
@@ -153,4 +153,4 @@ This project is licensed under the **MIT License** — see the [LICENSE](LICENSE
 
 ## Acknowledgments
 
-- Built with [Streamlit](https://streamlit.io/).
+Built with [Streamlit](https://streamlit.io/).
