@@ -74,10 +74,10 @@ def render_game() -> None:
     render_current_turn(game)
 
     # Render the game board and get the position of the cell clicked by the user (if any)
-    clicked_position = render_board(game)
+    clicked_cell = render_board(game)
     handle_ai_turn(game)
-    if clicked_position:
-        handle_human_turn(game, clicked_position)
+    if clicked_cell:
+        handle_human_turn(game, clicked_cell)
 
     # Check if game is over to render the end game screen with the result and the option to replay
     if game.game_over:
@@ -103,15 +103,15 @@ def handle_ai_turn(game: GameManager) -> None:
         refresh_app_rendering()
 
 
-def handle_human_turn(game: GameManager, clicked_position: tuple[int, int]) -> None:
+def handle_human_turn(game: GameManager, clicked_cell: tuple[int, int]) -> None:
     """
-    Handle the human player's turn by playing the move at the clicked position and refreshing the app rendering.
+    Handle the human player's turn by playing the move at the clicked cell and refreshing the app rendering.
 
     Args:        
         game (GameManager): The current game manager instance containing the game state.
-        clicked_position (tuple[int, int]): The row and column indices of the cell clicked by the user.
+        clicked_cell (tuple[int, int]): The row and column indices of the cell clicked by the user.
     """
-    game.play_turn(position=clicked_position)
+    game.play_turn(position=clicked_cell)
     refresh_app_rendering()
 
 
