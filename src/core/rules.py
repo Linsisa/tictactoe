@@ -18,10 +18,10 @@ def check_winner(board: Board, last_move: tuple[int, int], win_length: int) -> s
     if not board.is_position_in_bounds(last_move):
         return None
 
-    if check_horizontal_win(board, last_move, win_length) or \
-        check_vertical_win(board, last_move, win_length) or \
-        check_main_diagonal_win(board, last_move, win_length) or \
-        check_anti_diagonal_win(board, last_move, win_length):
+    if _check_horizontal_win(board, last_move, win_length) or \
+        _check_vertical_win(board, last_move, win_length) or \
+        _check_main_diagonal_win(board, last_move, win_length) or \
+        _check_anti_diagonal_win(board, last_move, win_length):
         return board.get_cell(*last_move)
 
     return None
@@ -43,7 +43,7 @@ def check_draw(board: Board, last_move: tuple[int, int], win_length: int) -> boo
 
 
 ### Helper functions for rules.py ###
-def check_direction(board: Board, last_move: tuple[int, int], win_length: int, dx: int, dy: int) -> bool:
+def _check_direction(board: Board, last_move: tuple[int, int], win_length: int, dx: int, dy: int) -> bool:
     """
     Check if there is a continuous sequence (size >= win_length) 
     in a specific direction (defined by dx and dy) of the symbol 
@@ -80,21 +80,21 @@ def check_direction(board: Board, last_move: tuple[int, int], win_length: int, d
     return count >= win_length
 
 
-def check_horizontal_win(board: Board, last_move: tuple[int, int], win_length: int) -> bool:
+def _check_horizontal_win(board: Board, last_move: tuple[int, int], win_length: int) -> bool:
     """Check if there is a winning sequence of the given symbol in horizontal directions from the last move."""
-    return check_direction(board, last_move, win_length, dx=0, dy=1)
+    return _check_direction(board, last_move, win_length, dx=0, dy=1)
 
 
-def check_vertical_win(board: Board, last_move: tuple[int, int], win_length: int) -> bool:
+def _check_vertical_win(board: Board, last_move: tuple[int, int], win_length: int) -> bool:
     """Check if there is a winning sequence of the given symbol in vertical directions from the last move."""
-    return check_direction(board, last_move, win_length, dx=1, dy=0)
+    return _check_direction(board, last_move, win_length, dx=1, dy=0)
 
 
-def check_main_diagonal_win(board: Board, last_move: tuple[int, int], win_length: int) -> bool:
+def _check_main_diagonal_win(board: Board, last_move: tuple[int, int], win_length: int) -> bool:
     """Check if there is a winning sequence of the given symbol in the main diagonal direction from the last move."""
-    return check_direction(board, last_move, win_length, dx=1, dy=1)
+    return _check_direction(board, last_move, win_length, dx=1, dy=1)
 
 
-def check_anti_diagonal_win(board: Board, last_move: tuple[int, int], win_length: int) -> bool:
+def _check_anti_diagonal_win(board: Board, last_move: tuple[int, int], win_length: int) -> bool:
     """Check if there is a winning sequence of the given symbol in the bottom-left to top-right diagonal direction from the last move."""
-    return check_direction(board, last_move, win_length, dx=1, dy=-1)
+    return _check_direction(board, last_move, win_length, dx=1, dy=-1)
