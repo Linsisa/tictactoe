@@ -119,7 +119,7 @@ def _render_board_grid(board: "Board", disable_cells: bool) -> None:
 
             with cols[col_idx]:
                 if st.button(
-                        label=cell_value if cell_value else " ",
+                        label=cell_value,
                         key=f"cell_{row_idx}_{col_idx}",
                         disabled=disable_cells,
                         use_container_width=True
