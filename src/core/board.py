@@ -13,6 +13,10 @@ class Board:
     def reset_board(self):
         """Reset the game board to its initial empty state."""
         self.board: list[list[str | None]] = [[EMPTY_CELL for _ in range(self.size)] for _ in range(self.size)]
+    
+    def set_board(self, new_board: list[list[str | None]]):
+        """Set the board to a new state (used for testing purposes)."""
+        self.board = new_board
 
     def apply_move(self, move: tuple[int, int], symbol: str) -> bool:
         """
