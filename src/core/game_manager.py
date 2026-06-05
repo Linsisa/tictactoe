@@ -99,6 +99,10 @@ class GameManager:
         """Return True if the current player is a human player, False otherwise."""
         player = self.get_current_player()
         return player.strategy.is_human
+    
+    def is_human_input_allowed(self) -> bool:
+        """Determine if human input is allowed based on the current game state and player type."""
+        return not self.game_over and self.is_current_player_human()
 
     def _switch_player(self) -> None:
         """Switch the current player to the other player."""

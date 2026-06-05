@@ -81,8 +81,7 @@ def _disable_buttons(game: GameManager) -> bool:
     Returns:
         bool: A boolean indicating whether the buttons should be disabled.
     """
-    is_human_turn = game.is_current_player_human()
-    return game.game_over or not is_human_turn
+    return not game.is_human_input_allowed()
 
 
 def _get_layout_portion_for_columns(game: GameManager) -> tuple[int, int]:
