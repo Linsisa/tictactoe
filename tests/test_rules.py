@@ -96,6 +96,21 @@ class TestRules:
         result = rules.check_winner(self.board, last_move, win_length)
         assert result == expected_winner  # Winner should be detected
 
+    def test_check_winner_board_size_4(self):
+        """Test the check_winner function on a 4x4 board."""
+        board_state = [['X', 'X', 'X', 'X'], 
+                        ['O', 'O', None, None], 
+                        [None, None, None, None],
+                        [None, None, None, None]]
+        last_move = (0, 2)
+        win_length = 4
+
+        self.board = Board(size=4)  # Create a 4x4 board
+        self.board.set_board(board_state)
+
+        expected_winner = 'X'  # 'X' has four in a row horizontally at the top row
+        result = rules.check_winner(self.board, last_move, win_length)
+        assert result == expected_winner  # Winner should be detected
 
     ### Tests for check_draw function ###
     @pytest.mark.parametrize("board_state, last_move, expected_draw", [
