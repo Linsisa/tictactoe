@@ -18,7 +18,6 @@ class Player:
             board (Board): The current state of the game board.
 
         Returns:
-            tuple[int, int] | None: The row and column indices in case of AI playing
-                                    else "None" player move come from UI.        
+            tuple[int, int] | None: The row and column indices for the move get from the strategy, or None if no move is possible.       
         """
         return self.strategy.get_move(board)
