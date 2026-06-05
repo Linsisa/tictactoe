@@ -61,7 +61,7 @@ class TestRules:
         """Test the check_winner function with various board states and last moves."""
         win_length = 3
         self.board = Board(size=BOARD_SIZE_TEST)
-        self.board.board = board_state  # Set the board to the desired state for the test 
+        self.board.set_board(board_state)  # Set the board to the desired state for the test 
 
         result = rules.check_winner(self.board, last_move, win_length)
         assert result == expected_winner
@@ -76,7 +76,7 @@ class TestRules:
         win_length = 4  # Greater than board size
 
         self.board = Board(size=BOARD_SIZE_TEST)
-        self.board.board = board_state
+        self.board.set_board(board_state)
 
         result = rules.check_winner(self.board, last_move, win_length)
         assert result is None  # No winner should be detected
@@ -90,7 +90,7 @@ class TestRules:
         win_length = 2  # Lower than board size
 
         self.board = Board(size=BOARD_SIZE_TEST)
-        self.board.board = board_state
+        self.board.set_board(board_state)
 
         expected_winner = 'X'  # 'X' has two in a row horizontally at the top row
         result = rules.check_winner(self.board, last_move, win_length)
@@ -120,7 +120,7 @@ class TestRules:
         """Test the check_draw function with various board states and last moves."""
         win_length = 3
         self.board = Board(size=BOARD_SIZE_TEST)
-        self.board.board = board_state  # Set the board to the desired state for the test 
+        self.board.set_board(board_state)  # Set the board to the desired state for the test 
 
         result = rules.check_draw(self.board, last_move, win_length)
         assert result == expected_draw
