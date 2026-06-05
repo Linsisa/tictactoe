@@ -34,11 +34,11 @@ class TestPlayer:
         player = Player(name="AI Player", symbol="O", strategy=RandomAIStrategy())
         
         # Create board state with only one free cell at (0, 0)
-        self.board.board = [
-            [None, "X", "O"],
-            ["O", "X", "X"],
-            ["X", "O", "O"]
-        ]
+        self.board.set_board(
+            [[None, "X", "O"],
+             ["O", "X", "X"],
+             ["X", "O", "O"]]
+        )
         
         result = player.get_move(self.board)
         assert result == (0, 0)
