@@ -100,7 +100,7 @@ def _get_layout_portion_for_columns(num_columns: int) -> tuple[int, int]:
     return [padding, num_columns, padding]
 
 
-def _render_board_grid(board: "Board", disable_cells: bool) -> None:
+def _render_board_grid(board: "Board", disable_cells: bool) -> tuple[int, int] | None:
     """
     Render the game board as a grid of buttons.
 
