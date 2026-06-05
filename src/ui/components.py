@@ -2,7 +2,7 @@
 
 import streamlit as st
 
-from config.ui import ICONS, UI_MESSAGES
+from config.ui import ICONS, UI_MESSAGES, BOARD_SYMBOLS
 from config.settings import SYMBOL_X, SYMBOL_O
 from core.game_manager import GameManager
 
@@ -23,7 +23,7 @@ def render_side_options(game_in_progress: bool) -> None:
         player_symbol = st.sidebar.selectbox(
             label=UI_MESSAGES["choose_symbol"],
             key="player_symbol",
-            options=[SYMBOL_X, SYMBOL_O],
+            options=[BOARD_SYMBOLS[SYMBOL_X], BOARD_SYMBOLS[SYMBOL_O]],
             disabled=game_in_progress
         )
 
@@ -33,6 +33,7 @@ def render_side_options(game_in_progress: bool) -> None:
             key="launch_button",
             disabled=game_in_progress
         ):
+            player_symbol = SYMBOL_X if player_symbol == BOARD_SYMBOLS[SYMBOL_X] else SYMBOL_O
             st.session_state.options = {
                 "player_symbol": player_symbol
             }
@@ -71,7 +72,8 @@ def render_board(game: GameManager) -> tuple[int, int] | None:
             cols = st.columns(col_num) 
 
             for col in range(col_num):
-                cell_value = board[row][col]
+                cell_value = BOARD_SYMBOLS.get(board[row][col])  # Display the UI symbol based on the board value
+                
                 with cols[col]:
                     if st.button(
                         label=cell_value if cell_value else " ",
