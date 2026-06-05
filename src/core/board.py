@@ -52,7 +52,7 @@ class Board:
         """Return a list of free cells on the board."""
         return [
             (row_idx, col_idx) 
-            for row_idx, row in enumerate(self.board)
+            for row_idx, row in enumerate(self._board)
             for col_idx, cell in enumerate(row)
             if cell == EMPTY_CELL
         ]
