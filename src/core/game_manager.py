@@ -103,7 +103,7 @@ class GameManager:
     def is_current_player_human(self) -> bool:
         """Return True if the current player is a human player, False otherwise."""
         player = self.get_current_player()
-        return isinstance(player.strategy, HumanStrategy)
+        return player.strategy.is_human
 
     def _switch_player(self) -> None:
         """Switch the current player to the other player."""
