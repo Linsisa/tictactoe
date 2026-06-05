@@ -62,10 +62,11 @@ def render_board(game: GameManager) -> tuple[int, int] | None:
         or None if no cell was clicked.
     """
     board_state = game.get_current_board_state()
+    num_columns = len(board_state[0]) if board_state else 0
     disable_cells = _disable_buttons(game)
     
     # Create colomns for centering the board, with dynamic padding based on the number of columns in the board
-    _, col_centre, _ = st.columns(_get_layout_portion_for_columns(game))
+    _, col_centre, _ = st.columns(_get_layout_portion_for_columns(num_columns))
 
     with col_centre:
         return _render_board_grid(board_state, disable_cells)
@@ -84,19 +85,19 @@ def _disable_buttons(game: GameManager) -> bool:
     return not game.is_human_input_allowed()
 
 
-def _get_layout_portion_for_columns(game: GameManager) -> tuple[int, int]:
+def _get_layout_portion_for_columns(num_columns: int) -> tuple[int, int]:
     """
     Calculate the layout portion for the display based on the number of columns in the board.
 
     Args:
-        game (GameManager): The current game manager instance containing the game state.
+        num_columns (int): The number of columns in the game board.
+
 
     Returns:
         tuple[int, int]: A tuple containing the layout portion for the center column and the padding.
     """
-    col_num = len(game.get_current_board_state()[0]) if game.get_current_board_state() else 0
-    padding = max(1, 8 - col_num)  # Adjust padding based on the number of columns
-    return [padding, col_num, padding]
+    padding = max(1, 8 - num_columns)  # Adjust padding based on the number of columns
+    return [padding, num_columns, padding]
 
 
 def _render_board_grid(board: "Board", disable_cells: bool) -> None:
