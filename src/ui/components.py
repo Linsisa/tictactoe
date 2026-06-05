@@ -26,6 +26,7 @@ def render_side_options(game_in_progress: bool) -> None:
             options=[BOARD_SYMBOLS[SYMBOL_X], BOARD_SYMBOLS[SYMBOL_O]],
             disabled=game_in_progress
         )
+        st.text(UI_MESSAGES["symbol_info"].format(BOARD_SYMBOLS[SYMBOL_X]))
 
         st.divider()
         if st.button(

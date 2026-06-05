@@ -22,6 +22,7 @@ UI_MESSAGES = {
     "choose_options": "Choose options in the sidebar to launch the game",
     "choose_symbol": "Choose your symbol:",
     "symbol_options": "Symbol options:",
+    "symbol_info": "Symbol {} starts first.",
     "current_turn": "Current turn:",
     "draw": "It's a draw!",
     "victory": "{} wins! Symbol: {}",
