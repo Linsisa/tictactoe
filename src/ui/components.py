@@ -7,7 +7,7 @@ from config.settings import SYMBOL_X, SYMBOL_O
 from core.game_manager import GameManager
 
 
-### RULES RENDERING
+### RULES RENDERING ###
 def render_rules() -> None:
     """
     Render the game rules in a expander on the main page of the application, allowing users to understand how to play the game and what the rules are.
@@ -16,7 +16,7 @@ def render_rules() -> None:
         st.text(GAME_RULES.format(BOARD_SYMBOLS[SYMBOL_X], BOARD_SYMBOLS[SYMBOL_O], BOARD_SYMBOLS[SYMBOL_X]))
 
 
-### SIDEBAR OPTIONS RENDERING
+### SIDEBAR OPTIONS RENDERING ###
 def render_side_options(game_in_progress: bool) -> None:
     """
     Render the game options for the user to select game options by registering in session state.
@@ -49,7 +49,7 @@ def render_side_options(game_in_progress: bool) -> None:
             }
 
 
-### BOARD RENDERING
+### BOARD RENDERING ###
 def render_board(game: GameManager) -> tuple[int, int] | None:
     """
     Render the game board using Streamlit.
@@ -130,7 +130,7 @@ def _render_board_grid(board: "Board", disable_cells: bool) -> None:
     return clicked_cell
 
 
-## GAME OVER SECTION RENDERING
+### GAME OVER SECTION RENDERING ###
 def render_game_over(game: GameManager) -> None:
     """
     Render the end game screen with the result of the game and the option to replay.
