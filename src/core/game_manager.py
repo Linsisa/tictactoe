@@ -100,9 +100,30 @@ class GameManager:
         player = self.get_current_player()
         return player.strategy.is_human
     
+    def is_current_player_ai(self) -> bool:
+        """Return True if the current player is an AI player, False otherwise."""
+        player = self.get_current_player()
+        return not player.strategy.is_human
+    
     def is_human_input_allowed(self) -> bool:
         """Determine if human input is allowed based on the current game state and player type."""
         return not self.game_over and self.is_current_player_human()
+    
+    def is_ai_input_allowed(self) -> bool:
+        """Determine if AI input is allowed based on the current game state and player type."""
+        return not self.game_over and self.is_current_player_ai()
+
+    def is_game_over(self) -> bool:
+        """Return True if the game is over, False otherwise."""
+        return self.game_over
+    
+    def is_winner(self) -> bool:
+        """Return True if there is a winner, False otherwise."""
+        return self.winner is not None
+    
+    def get_winner(self) -> Player | None:
+        """Return the winner of the game, or None if there is no winner."""
+        return self.winner
 
     def _switch_player(self) -> None:
         """Switch the current player to the other player."""

@@ -57,7 +57,7 @@ def render_current_turn(game: GameManager) -> None:
     Args:
         game (GameManager): The current game manager instance containing the game state.
     """
-    if not game.game_over:
+    if not game.is_game_over():
         st.info(UI_MESSAGES["current_turn"] + f" **{game.get_current_player().name} ({game.get_current_player().symbol})**")
 
 
@@ -80,7 +80,7 @@ def render_game() -> None:
         handle_human_turn(game, clicked_cell)
 
     # Check if game is over to render the end game screen with the result and the option to replay
-    if game.game_over:
+    if game.is_game_over():
         render_game_over(game)
 
 
@@ -92,10 +92,7 @@ def handle_ai_turn(game: GameManager) -> None:
     Args:
         game (GameManager): The current game manager instance containing the game state.
     """
-    is_ai_turn = (
-        not game.is_current_player_human() 
-        and not game.game_over
-    )
+    is_ai_turn = game.is_ai_input_allowed()
     
     if is_ai_turn:
         sleep(AI_SLEEP_TIME)  # Simulate thinking time for the AI
@@ -135,7 +132,7 @@ def start_game(human_symbol: str) -> None:
 
 def is_game_in_progress() -> bool:
     """Return True if a game is currently in progress, False otherwise."""
-    return game_exists() and not st.session_state.game.game_over
+    return game_exists() and not st.session_state.game.is_game_over()
 
 
 def game_exists() -> bool:

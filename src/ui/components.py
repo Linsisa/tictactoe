@@ -138,8 +138,8 @@ def render_game_over(game: GameManager) -> None:
     Args:
         game (GameManager): The current game manager instance containing the game state.
     """
-    if game.winner:
-        success_message = UI_MESSAGES["victory"].format(game.winner.name, game.winner.symbol)
+    if game.is_winner():
+        success_message = UI_MESSAGES["victory"].format(game.get_winner().name, game.get_winner().symbol)
         st.success(success_message, icon=ICONS["victory"])
     else:
         st.info(UI_MESSAGES["draw"], icon=ICONS["draw"])
