@@ -34,7 +34,7 @@ class Board:
 
     def get_current_board(self):
         """Return the current state of the board."""
-        return self.board
+        return [row.copy() for row in self.board]
     
     def get_cell(self, row: int, col: int) -> str | None:
         """Return the value of a specific cell on the board."""
