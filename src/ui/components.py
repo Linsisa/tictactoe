@@ -61,13 +61,14 @@ def render_board(game: GameManager) -> tuple[int, int] | None:
         tuple[int, int] | None: The position of the cell clicked by the user,
         or None if no cell was clicked.
     """
+    board_state = game.get_current_board_state()
     disable_cells = _disable_buttons(game)
     
     # Create colomns for centering the board, with dynamic padding based on the number of columns in the board
     _, col_centre, _ = st.columns(_get_layout_portion_for_columns(game))
 
     with col_centre:
-        return _render_board_grid(game, disable_cells)
+        return _render_board_grid(board_state, disable_cells)
 
 
 def _disable_buttons(game: GameManager) -> bool:
@@ -99,34 +100,31 @@ def _get_layout_portion_for_columns(game: GameManager) -> tuple[int, int]:
     return [padding, col_num, padding]
 
 
-def _render_board_grid(game: GameManager, disable_cells: bool) -> None:
+def _render_board_grid(board: "Board", disable_cells: bool) -> None:
     """
     Render the game board as a grid of buttons.
 
     Args:
-        game (GameManager): The current game manager instance containing the game state.
+        board (list[list[str | None]]): The current state of the game board.
         disable_cells (bool): A boolean indicating whether the cells should be disabled.
     """
-    board = game.get_current_board_state()
-    row_num = len(board)
-    col_num = len(board[0]) if board else 0
-
     clicked_cell = None
-    st.html("<div class='tictactoe-board'>")  # Add a wrapper div with a specific class for styling
-    for row in range(row_num):
-        cols = st.columns(col_num) 
 
-        for col in range(col_num):
-            cell_value = BOARD_SYMBOLS.get(board[row][col])  # Display the UI symbol based on the board value
-            
-            with cols[col]:
+    st.html("<div class='tictactoe-board'>")  # Add a wrapper div with a specific class for styling
+    for row_idx, row in enumerate(board):
+        cols = st.columns(len(row))  # Create columns for each cell in the row
+
+        for col_idx, cell in enumerate(row):
+            cell_value = BOARD_SYMBOLS.get(cell)  # Display the UI symbol based on the board value
+
+            with cols[col_idx]:
                 if st.button(
                         label=cell_value if cell_value else " ",
-                        key=f"cell_{row}_{col}",
+                        key=f"cell_{row_idx}_{col_idx}",
                         disabled=disable_cells,
                         use_container_width=True
                     ):
-                        clicked_cell = (row, col)
+                        clicked_cell = (row_idx, col_idx)
     st.html("</div>")
 
     return clicked_cell
