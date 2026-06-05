@@ -58,7 +58,9 @@ def render_board(game: GameManager) -> tuple[int, int] | None:
     is_human_turn = game.is_current_player_human()
     disable_buttons = game.game_over or not is_human_turn
 
-    col_gauche, col_centre, col_droite = st.columns([3, 2, 3])
+
+    padding = max(1, 8 - col_num)
+    col_gauche, col_centre, col_droite = st.columns([padding, col_num, padding])
 
     clicked_cell = None
 
