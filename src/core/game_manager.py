@@ -81,7 +81,7 @@ class GameManager:
         if self.last_move is None:
             return
 
-        # Check wheter the last move created a winner.
+        # Check whether the last move created a winner.
         winner_symbol = check_winner(self.board, self.last_move, self.win_length)
         if winner_symbol:
             self.winner = self.get_current_player()
