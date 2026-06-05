@@ -60,9 +60,6 @@ def _check_direction(board: Board, last_move: tuple[int, int], win_length: int, 
     Returns:
         bool: True if there is a winning sequence in the specified direction, False otherwise.
     """
-    if symbol == EMPTY_CELL:
-        return False  # No symbol at the last move position, so can't have a winning sequence
-
     symbol = board.get_cell(*last_move) # Get last player symbol from the last move position
     count = 1  # Start with 1 to include the last move itself
     row, col = last_move
