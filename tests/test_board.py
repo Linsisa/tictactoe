@@ -11,12 +11,11 @@ class TestBoard:
     def setup_method(self):
         """Set up a new board instance before each test."""
         self.board = Board(size=BOARD_SIZE_TEST)
+        self.empty_board = [[EMPTY_CELL for _ in range(BOARD_SIZE_TEST)] for _ in range(BOARD_SIZE_TEST)]
 
     def test_board_initialization(self):
         """Test that the board created by the Board class is initialized correctly."""
-        expected_board = [[EMPTY_CELL for _ in range(BOARD_SIZE_TEST)] for _ in range(BOARD_SIZE_TEST)]
-
-        assert self.board.get_current_board() == expected_board
+        assert self.board.get_current_board() == self.empty_board
 
     def test_board_reset(self):
         """Test that the reset board method correctly resets the board to its initial state."""
@@ -25,8 +24,7 @@ class TestBoard:
 
         self.board.reset_board()
 
-        expected_board = [[EMPTY_CELL for _ in range(BOARD_SIZE_TEST)] for _ in range(BOARD_SIZE_TEST)]
-        assert self.board.get_current_board() == expected_board
+        assert self.board.get_current_board() == self.empty_board
 
     ### Apply move tests ###
     def test_apply_move_success(self):
