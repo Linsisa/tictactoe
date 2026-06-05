@@ -43,13 +43,13 @@ class TestRules:
           ['O', 'X', None], 
           [None, None, 'X']], (2, 2), 'X'), # Bottom-right
         # Anti-diagonal win
-        ([['None', 'O', 'X'], 
+        ([[None, 'O', 'X'], 
           ['O', 'X', None], 
           ['X', None, None]], (0, 2), 'X'), # Top-right
-        ([['None', 'O', 'X'], 
+        ([[None, 'O', 'X'], 
           ['O', 'X', None], 
           ['X', None, None]], (1, 1), 'X'), # Center
-        ([['None', 'O', 'X'], 
+        ([[None, 'O', 'X'], 
           ['O', 'X', None], 
           ['X', None, None]], (2, 0), 'X'), # Bottom-left
         # No winner
