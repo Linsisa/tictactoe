@@ -15,9 +15,8 @@ class TestStrategies:
 
     def test_base_strategy_raises_not_implemented(self):
         """Test that the base strategy raises NotImplementedError."""
-        strategy = Strategy()
-        with pytest.raises(NotImplementedError):
-            strategy.get_move(self.board)
+        with pytest.raises(TypeError):
+            Strategy()
 
     def test_human_strategy_returns_none(self):
         """Test that the human strategy returns None."""
