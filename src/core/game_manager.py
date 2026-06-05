@@ -53,20 +53,9 @@ class GameManager:
         # Stop if the game is over, no more moves can be played.
         if self.game_over:
             return False
-    
-        
-        # Second step, get the move from the current player strategy. 
-        # If it's a human player, the move should come from the UI,
-        # so we use the `position` argument. 
-        # If it's an AI player, we call the `get_move` method of the 
-        # player's strategy to determine the move chosen by the AI.
+
         player = self.get_current_player()
-        if self.is_current_player_human():
-            if position is None:
-                return False
-            move = position 
-        else: # In this case, the player is an AI, so we get the move from the strategy.
-            move = player.get_move(self.board)
+        move = self._get_move_for_player(player, position)
         
         # After move is selected, apply it to the board.
         success = self.board.apply_move(move, player.symbol) if move is not None else False
@@ -98,6 +87,10 @@ class GameManager:
         # Reaching this point means the game is not over, so we switch to the next player.
         self._switch_player()
 
+    def get_current_board_state(self) -> list[list[str | None]]:
+        """Return the current state of the board as a 2D list."""
+        return self.board.get_current_board()
+    
     def get_current_player(self) -> Player:
         """Return the current player."""
         return self.players[self.current_player_index]
@@ -115,7 +108,10 @@ class GameManager:
         """Select the player with the 'X' symbol as the starting player."""
         starting_player = 0 if self.players[0].symbol == SYMBOL_X else 1
         return starting_player
-    
-    def get_current_board_state(self) -> list[list[str | None]]:
-        """Return the current state of the board as a 2D list."""
-        return self.board.get_current_board()
+
+    def _get_move_for_player(self, player: Player, position: tuple[int, int] | None) -> tuple[int, int] | None:
+        """Get the move for the current player based on whether they are human or AI."""
+        if player.strategy.is_human:
+            return position  # For human players, the move should come from the UI
+        else:
+            return player.get_move(self.board)  # For AI players, get the move from their strategy
