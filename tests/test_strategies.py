@@ -28,11 +28,11 @@ class TestStrategies:
         """Test that the random AI strategy picks a valid cell."""
         strategy = RandomAIStrategy()
         
-        self.board.board = [
-            ['X', 'O', None],
-            [None, 'X', 'O'],
-            ['O', None, 'X']
-        ]
+        self.board.set_board(
+            [['X', 'O', None],
+             [None, 'X', 'O'],
+             ['O', None, 'X']]
+        )
         free_cells = self.board.get_free_cells()
         
 
@@ -46,11 +46,11 @@ class TestStrategies:
         strategy = RandomAIStrategy()
         
         # Il ne reste que la case centrale (1, 1) de libre
-        self.board.board = [
-            ['X', 'O', 'X'],
-            ['O', None, 'O'],
-            ['O', 'X', 'X']
-        ]
+        self.board.set_board(
+            [['X', 'O', 'X'],
+             ['O', None, 'O'],
+             ['O', 'X', 'X']]
+        )
         
         ai_chosen_move = strategy.get_move(self.board)
         assert ai_chosen_move == (1, 1)
@@ -60,11 +60,11 @@ class TestStrategies:
         strategy = RandomAIStrategy()
         
         # Le plateau est plein, il n'y a plus de cases libres
-        self.board.board = [
-            ['X', 'O', 'X'],
-            ['O', 'X', 'O'],
-            ['O', 'X', 'O']
-        ]
+        self.board.set_board(
+            [['X', 'O', 'X'],
+             ['O', 'X', 'O'],
+             ['O', 'X', 'O']]
+        )
         
         ai_chosen_move = strategy.get_move(self.board)
         assert ai_chosen_move is None
