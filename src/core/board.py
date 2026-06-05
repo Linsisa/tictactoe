@@ -49,8 +49,7 @@ class Board:
     
     def is_full(self) -> bool:
         """Check if the board is full (no free cells)."""
-        isFull = False if self.get_free_cells() else True
-        return isFull
+        return not self.get_free_cells()
     
     def is_position_in_bounds(self, position: tuple[int, int]) -> bool:
         """Check if a given position is within the bounds of the board."""
