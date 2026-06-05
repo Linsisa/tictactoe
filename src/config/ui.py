@@ -1,9 +1,11 @@
 """File containing UI configuration constants for the Streamlit app."""
 
+from config.settings import EMPTY_CELL
+
 BOARD_SYMBOLS = {
     "X": "❌", # Cross symbol for player X
     "O": "⭕", # Circle symbol for player O
-    None: "➖" # Dash symbol for empty cells
+    EMPTY_CELL: "➖" # Dash symbol for empty cells
 }
 
 ICONS = {
