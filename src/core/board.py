@@ -2,6 +2,7 @@
 
 from config.settings import EMPTY_CELL
 
+
 class Board:
     """Class representing the game board for Tic Tac Toe."""
 
