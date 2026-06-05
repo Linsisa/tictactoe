@@ -164,11 +164,11 @@ class TestGameManager:
     def test_after_turn_winner(self):
         """Test that _after_turn correctly identifies a winner and ends the game."""
         # Simulate a winning move for player 1
-        self.game_manager.board.board = [
-            [SYMBOL_X, SYMBOL_X, SYMBOL_X],
-            [SYMBOL_O, SYMBOL_O, None],
-            [None,     None,     None]
-        ]
+        self.game_manager.board.set_board(
+            [[SYMBOL_X, SYMBOL_X, SYMBOL_X],
+             [SYMBOL_O, SYMBOL_O, None],
+             [None,     None,     None]]
+        )
         self.game_manager.last_move = (0, 2)  # Player 1 places 'X' at (0, 2) to win
 
         self.game_manager._after_turn()
@@ -179,11 +179,11 @@ class TestGameManager:
     def test_after_turn_draw(self):
         """Test that _after_turn correctly identifies a draw and ends the game."""
         # Simulate a draw state
-        self.game_manager.board.board = [
-            [SYMBOL_X, SYMBOL_O, SYMBOL_X],
-            [SYMBOL_O, SYMBOL_X, SYMBOL_O],
-            [SYMBOL_O, SYMBOL_X, SYMBOL_O]
-        ]
+        self.game_manager.board.set_board(
+            [[SYMBOL_X, SYMBOL_O, SYMBOL_X],
+             [SYMBOL_O, SYMBOL_X, SYMBOL_O],
+             [SYMBOL_O, SYMBOL_X, SYMBOL_O]]
+        )
         self.game_manager.last_move = (1, 1)  # Last move was at (1, 1)
 
         self.game_manager._after_turn()
