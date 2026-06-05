@@ -4,7 +4,6 @@ from config.settings import SYMBOL_X
 from core.board import Board
 from core.player import Player
 from core.rules import check_winner, check_draw
-from core.strategies import HumanStrategy
 
 
 class GameManager:
