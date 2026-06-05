@@ -75,9 +75,7 @@ def render_game() -> None:
 
     # Render the game board and get the position of the cell clicked by the user (if any)
     clicked_cell = render_board(game)
-    handle_ai_turn(game)
-    if clicked_cell:
-        handle_human_turn(game, clicked_cell)
+    handle_turn(game, clicked_cell)
 
     # Check if game is over to render the end game screen with the result and the option to replay
     if game.is_game_over():
@@ -85,6 +83,22 @@ def render_game() -> None:
 
 
 ### Turn handling functions ###
+def handle_turn(game: GameManager, clicked_cell: tuple[int, int] | None) -> None:
+    """
+    Handle the current turn for both AI and human players based on the game state and user interactions.
+
+    Args:
+        game (GameManager): The current game manager instance containing the game state.
+        clicked_cell (tuple[int, int] | None): The row and column indices of the cell clicked by the user, or None if no cell was clicked.
+    """
+    is_ai_turn = game.is_ai_input_allowed()
+    
+    if is_ai_turn:
+        handle_ai_turn(game)
+    elif clicked_cell:
+        handle_human_turn(game, clicked_cell)
+
+
 def handle_ai_turn(game: GameManager) -> None:
     """
     Make AI play if it's AI's turn and the game is not over, then refresh the app rendering.
