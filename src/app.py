@@ -106,12 +106,9 @@ def handle_ai_turn(game: GameManager) -> None:
     Args:
         game (GameManager): The current game manager instance containing the game state.
     """
-    is_ai_turn = game.is_ai_input_allowed()
-    
-    if is_ai_turn:
-        sleep(AI_SLEEP_TIME)  # Simulate thinking time for the AI
-        game.play_turn()  # Make AI play its turn (position is None, AI will choose its move)
-        refresh_app_rendering()
+    sleep(AI_SLEEP_TIME)  # Simulate thinking time for the AI
+    game.play_turn()  # Make AI play its turn (position is None, AI will choose its move)
+    refresh_app_rendering()
 
 
 def handle_human_turn(game: GameManager, clicked_cell: tuple[int, int]) -> None:
