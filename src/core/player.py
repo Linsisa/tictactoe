@@ -12,12 +12,12 @@ class Player:
 
     def get_move(self, board: "Board") -> tuple[int, int] | None:
         """
-        Get the player's move based on their strategy.
+        Return the move for the player based on their strategy.
 
         Args:
             board (Board): The current state of the game board.
 
         Returns:
-            tuple[int, int] | None: The row and column indices for the move get from the strategy, or None if no move is possible.       
+            tuple[int, int] | None: The row and column indices of the move.      
         """
         return self.strategy.get_move(board)
