@@ -25,8 +25,8 @@ def setup_main_page() -> None:
     sty.init()  # Initialize st_yled for enhanced styling capabilities
     st.html(CUSTOM_CSS)  # Apply custom CSS style to the app
     
-    sty.title(UI_MESSAGES["header_title"], text_alignment="center")
-    sty.subheader(UI_MESSAGES["header_subtitle"], text_alignment="center", color="#6B7280", font_size="1rem")
+    sty.title(UI_MESSAGES["header_title"])
+    sty.subheader(UI_MESSAGES["header_subtitle"], color="#6B7280", font_size="1rem")
     st.markdown("---")  # Add a horizontal divider after the header section
 
 
