@@ -1,3 +1,4 @@
 streamlit
 st-styled
 pip-tools
+pytest

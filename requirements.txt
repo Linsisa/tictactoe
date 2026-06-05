@@ -43,6 +43,8 @@ idna==3.18
     # via
     #   anyio
     #   requests
+iniconfig==2.3.0
+    # via pytest
 itsdangerous==2.2.0
     # via streamlit
 jinja2==3.1.6
@@ -68,6 +70,7 @@ packaging==26.2
     # via
     #   altair
     #   build
+    #   pytest
     #   streamlit
     #   wheel
 pandas==2.3.3
@@ -78,16 +81,22 @@ pillow==12.2.0
     # via streamlit
 pip-tools==7.5.3
     # via -r requirements.in
+pluggy==1.6.0
+    # via pytest
 protobuf==7.35.0
     # via streamlit
 pyarrow==24.0.0
     # via streamlit
 pydeck==0.9.2
     # via streamlit
+pygments==2.20.0
+    # via pytest
 pyproject-hooks==1.2.0
     # via
     #   build
     #   pip-tools
+pytest==9.0.3
+    # via -r requirements.in
 python-dateutil==2.9.0.post0
     # via pandas
 python-multipart==0.0.32
