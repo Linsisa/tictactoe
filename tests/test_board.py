@@ -1,7 +1,7 @@
 """File of tests for the board class"""
 
+from config.test_settings import BOARD_SIZE_TEST
 from core.board import Board, EMPTY_CELL
-from config.settings import BOARD_SIZE_TEST
 
 
 class TestBoard:

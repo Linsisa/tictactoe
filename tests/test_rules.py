@@ -1,10 +1,10 @@
 """File of tests for the rules and logic of the Tic Tac Toe game."""
 
 import pytest
-import core.rules as rules
 
+from config.test_settings import BOARD_SIZE_TEST
+import core.rules as rules
 from core.board import Board
-from config.settings import BOARD_SIZE_TEST
 
 
 class TestRules:

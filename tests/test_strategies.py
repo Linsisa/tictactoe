@@ -2,9 +2,9 @@
 
 import pytest
 
+from config.test_settings import BOARD_SIZE_TEST
 from core.board import Board
 from core.strategies import Strategy, HumanStrategy, RandomAIStrategy
-from config.settings import BOARD_SIZE_TEST
 
 class TestStrategies:
     """Test class for the strategies available in the game."""

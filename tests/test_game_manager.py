@@ -1,6 +1,7 @@
 """File of tests for the GameManager class."""
 
-from config.settings import BOARD_SIZE_TEST, SYMBOL_X, SYMBOL_O
+from config.settings import SYMBOL_X, SYMBOL_O
+from config.test_settings import BOARD_SIZE_TEST, WIN_LENGTH_TEST
 from core.board import Board
 from core.game_manager import GameManager
 from core.player import Player
@@ -15,16 +16,15 @@ class TestGameManager:
         self.player1 = Player(name="Player 1", symbol=SYMBOL_X, strategy=HumanStrategy())
         self.player2 = Player(name="Player 2", symbol=SYMBOL_O, strategy=RandomAIStrategy())
         self.expected_empty_board = [[None for _ in range(BOARD_SIZE_TEST)] for _ in range(BOARD_SIZE_TEST)]
-        self.win_length = 3
 
-        self.game_manager = GameManager(self.player1, self.player2, BOARD_SIZE_TEST, self.win_length)
+        self.game_manager = GameManager(self.player1, self.player2, BOARD_SIZE_TEST, WIN_LENGTH_TEST)
 
     def test_game_initialization(self):
         """Test that the GameManager initializes correctly."""
         assert self.game_manager.players == [self.player1, self.player2]
         assert isinstance(self.game_manager.board, Board)
         assert self.game_manager.board.get_current_board() == self.expected_empty_board
-        assert self.game_manager.win_length == self.win_length
+        assert self.game_manager.win_length == WIN_LENGTH_TEST
         assert self.game_manager.current_player_index == 0
         assert self.game_manager.winner is None
         assert self.game_manager.game_over is False
@@ -40,7 +40,7 @@ class TestGameManager:
             Player(name="Player 1", symbol=SYMBOL_O, strategy=HumanStrategy()),
             Player(name="Player 2", symbol=SYMBOL_X, strategy=RandomAIStrategy()),
             BOARD_SIZE_TEST,
-            self.win_length
+            WIN_LENGTH_TEST
         )
         assert game_manager_2.current_player_index == 1
         assert game_manager_2.players[game_manager_2.current_player_index].symbol == SYMBOL_X
@@ -63,7 +63,7 @@ class TestGameManager:
         assert self.game_manager.winner is None
         assert self.game_manager.game_over is False
         assert self.game_manager.last_move is None
-        assert self.game_manager.win_length == self.win_length  # win_length should remain unchanged
+        assert self.game_manager.win_length == WIN_LENGTH_TEST  # win_length should remain unchanged
 
     ### Tests for player-related methods ###
     def test_switch_player(self):
@@ -97,7 +97,7 @@ class TestGameManager:
             Player(name="Player 1", symbol=SYMBOL_O, strategy=HumanStrategy()),
             Player(name="Player 2", symbol=SYMBOL_X, strategy=RandomAIStrategy()),
             BOARD_SIZE_TEST,
-            self.win_length
+            WIN_LENGTH_TEST
         )
         assert game_manager_2._define_starting_player() == 1
 

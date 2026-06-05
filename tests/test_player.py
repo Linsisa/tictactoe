@@ -1,10 +1,10 @@
 """File of tests for the player class used in the Tic Tac Toe game."""
 
-
+from config.test_settings import BOARD_SIZE_TEST
 from core.player import Player
 from core.board import Board
 from core.strategies import HumanStrategy, RandomAIStrategy
-from config.settings import BOARD_SIZE_TEST
+
 
 class TestPlayer:
     """Test class for the Player dataclass."""
