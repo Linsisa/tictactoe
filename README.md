@@ -1,6 +1,6 @@
 # 🎮 Tic Tac Toe
 
-<!-- > 🚀 **Live Demo** : Try it now on **streamlit cloud**: [tictactoe](https://tictactoe-linsisa.streamlit.app/) -->
+🚀 **Live Demo** : Try it now on **streamlit cloud**: [tictactoe](https://tictactoe-linsisa.streamlit.app/)
 
 ## 📋 Table of Contents
 
@@ -97,11 +97,11 @@ The app will open at `http://localhost:8501` in your browser.
 
 
 ---
-<!-- ### Run live version on Streamlit Cloud
+### Run live version on Streamlit Cloud
 
-A live version of the app is available on Streamlit Cloud. Click the link below to explore the features without any setup.   -->
+A live version of the app is available on Streamlit Cloud. Click the link below to explore the features without any setup.  
 
-<!-- [Try the Live Demo](https://tictactoe-linsisa.streamlit.app/) -->
+[Try the Live Demo](https://tictactoe-linsisa.streamlit.app/)
 
 ### Run Tests
 To run the unit tests for the project, use the following command from the root directory:
