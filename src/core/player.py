@@ -10,7 +10,7 @@ class Player:
     symbol: str
     strategy: Strategy
 
-    def get_move(self, board: "Board") -> tuple[int, int] | None:
+    def get_move(self, board: "Board", position: tuple[int, int] = None) -> tuple[int, int] | None:
         """
         Return the move for the player based on their strategy.
 
@@ -20,4 +20,4 @@ class Player:
         Returns:
             tuple[int, int] | None: The row and column indices of the move.      
         """
-        return self.strategy.get_move(board)
+        return self.strategy.get_move(board, position)

@@ -3,6 +3,8 @@
 import random
 
 from abc import ABC, abstractmethod
+from time import sleep
+from config.settings import AI_SLEEP_TIME
 from core.board import Board
 
 class Strategy(ABC):
@@ -10,7 +12,7 @@ class Strategy(ABC):
     is_human: bool = False
 
     @abstractmethod
-    def get_move(self, board: Board) -> tuple[int, int] | None:
+    def get_move(self, board: Board, position: tuple[int, int] = None) -> tuple[int, int] | None:
         """Method to be implemented by subclasses to determine the next move."""
         raise NotImplementedError("Subclasses must implement this method.")
 
@@ -24,9 +26,9 @@ class HumanStrategy(Strategy):
     """
     is_human: bool = True
 
-    def get_move(self, board: Board) -> tuple[int, int] | None:
+    def get_move(self, board: Board, position: tuple[int, int] = None) -> tuple[int, int] | None:
         """Get the move from the user interface."""
-        return None
+        return position
     
 
 class RandomAIStrategy(Strategy):
@@ -36,10 +38,12 @@ class RandomAIStrategy(Strategy):
     Returns:
         tuple[int, int]: The row and column indices of the selected move.
     """
-    def get_move(self, board: Board) -> tuple[int, int] | None:
+    def get_move(self, board: Board, position: tuple[int, int] = None) -> tuple[int, int] | None:
         """Select a random valid move from the available cells on the board."""
         free_cells = board.get_free_cells()
 
         if not free_cells:
             return None  # No moves available
+        
+        sleep(AI_SLEEP_TIME)
         return random.choice(free_cells)

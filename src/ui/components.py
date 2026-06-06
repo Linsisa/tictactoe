@@ -3,7 +3,7 @@
 import streamlit as st
 import st_yled as sty
 
-from app_utils import handle_turn, game_exists, is_game_in_progress, refresh_app_rendering
+from app_utils import game_exists, is_game_in_progress, refresh_app_rendering
 from config.settings import SYMBOL_X, SYMBOL_O
 from config.ui import BOARD_SYMBOLS, ICONS, UI_MESSAGES, GAME_RULES
 from core.game_manager import GameManager
@@ -70,7 +70,9 @@ def render_game() -> None:
 
     # Render the game board and get the position of the cell clicked by the user (if any)
     clicked_cell = render_board(game)
-    handle_turn(game, clicked_cell)
+    
+    if game.play_turn(clicked_cell):
+        refresh_app_rendering()
 
     # Check if game is over to render the end game screen with the result and the option to replay
     if game.is_game_over():
