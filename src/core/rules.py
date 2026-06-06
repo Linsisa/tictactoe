@@ -1,6 +1,5 @@
 """File containing the rules and logic for the Tic Tac Toe game."""
 
-from config.settings import EMPTY_CELL
 from core.board import Board
 
 
