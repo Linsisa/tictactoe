@@ -3,9 +3,8 @@
 import streamlit as st
 import st_yled as sty
 
-from time import sleep
-from app_utils import game_exists, is_game_in_progress, refresh_app_rendering
-from config.settings import BOARD_SIZE, WIN_LENGTH, AI_SLEEP_TIME, SYMBOL_X, SYMBOL_O
+from app_utils import game_exists, is_game_in_progress, refresh_app_rendering, handle_turn
+from config.settings import BOARD_SIZE, WIN_LENGTH, SYMBOL_X, SYMBOL_O
 from config.ui import HUMAN_PLAYER_NAME, AI_PLAYER_NAME, UI_MESSAGES, CUSTOM_CSS
 from core.game_manager import GameManager
 from core.player import Player
@@ -66,45 +65,6 @@ def render_game() -> None:
     # Check if game is over to render the end game screen with the result and the option to replay
     if game.is_game_over():
         render_game_over(game)
-
-
-### Turn handling functions ###
-def handle_turn(game: GameManager, clicked_cell: tuple[int, int] | None) -> None:
-    """
-    Handle the current turn for both AI and human players based on the game state and user interactions.
-
-    Args:
-        game (GameManager): The current game manager instance containing the game state.
-        clicked_cell (tuple[int, int] | None): The row and column indices of the cell clicked by the user, or None if no cell was clicked.
-    """
-    is_ai_turn = game.is_ai_input_allowed()
-    
-    if is_ai_turn:
-        handle_ai_turn(game)
-    elif clicked_cell:
-        handle_human_turn(game, clicked_cell)
-
-def handle_ai_turn(game: GameManager) -> None:
-    """
-    Make AI play if it's AI's turn and the game is not over, then refresh the app rendering.
-
-    Args:
-        game (GameManager): The current game manager instance containing the game state.
-    """
-    sleep(AI_SLEEP_TIME)  # Simulate thinking time for the AI
-    game.play_turn()  # Make AI play its turn (position is None, AI will choose its move)
-    refresh_app_rendering()
-
-def handle_human_turn(game: GameManager, clicked_cell: tuple[int, int]) -> None:
-    """
-    Handle the human player's turn by playing the move at the clicked cell and refreshing the app rendering.
-
-    Args:        
-        game (GameManager): The current game manager instance containing the game state.
-        clicked_cell (tuple[int, int]): The row and column indices of the cell clicked by the user.
-    """
-    game.play_turn(position=clicked_cell)
-    refresh_app_rendering()
 
 
 ### Game functions ###
