@@ -44,7 +44,7 @@ def create_game(human_symbol: str) -> None:
 
 def should_start_new_game() -> bool:
     """Return True if the conditions to start a new game are met, False otherwise."""
-    return st.session_state.options is not None and not is_game_in_progress()
+    return st.session_state.start_new_game
 
 
 ### Turn handling functions ###

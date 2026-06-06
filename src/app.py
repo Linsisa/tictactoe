@@ -36,6 +36,8 @@ def init_session_state() -> None:
     """
     if "game" not in st.session_state:
         st.session_state.game = None
+    if "start_new_game" not in st.session_state:
+        st.session_state.start_new_game = False
     if "options" not in st.session_state:
         st.session_state.options = None
 
@@ -53,8 +55,8 @@ def main():
     render_game_status()
 
     if app_utils.should_start_new_game():
+        st.session_state.start_new_game = False
         selected_symbol = st.session_state.options["player_symbol"]
-        st.session_state.options = None
         app_utils.create_game(selected_symbol)
         app_utils.refresh_app_rendering()
         return

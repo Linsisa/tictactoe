@@ -34,6 +34,8 @@ def render_side_options(game_in_progress: bool) -> None:
             disabled=game_in_progress
         ):
             player_symbol = SYMBOL_X if player_symbol == BOARD_SYMBOLS[SYMBOL_X] else SYMBOL_O
+            
+            st.session_state.start_new_game = True
             st.session_state.options = {
                 "player_symbol": player_symbol
             }
