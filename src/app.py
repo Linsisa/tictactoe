@@ -4,13 +4,14 @@ import streamlit as st
 import st_yled as sty
 
 from time import sleep
+from app_utils import game_exists, is_game_in_progress, refresh_app_rendering
 from config.settings import BOARD_SIZE, WIN_LENGTH, AI_SLEEP_TIME, SYMBOL_X, SYMBOL_O
 from config.ui import HUMAN_PLAYER_NAME, AI_PLAYER_NAME, UI_MESSAGES, CUSTOM_CSS
 from core.game_manager import GameManager
 from core.player import Player
 from core.strategies import HumanStrategy, RandomAIStrategy
 from ui.board import render_board
-from ui.components import render_rules, render_game_over
+from ui.components import render_rules, render_game_status, render_current_turn, render_game_over
 from ui.sidebar import render_side_options
 
 
@@ -33,7 +34,6 @@ def setup_main_page() -> None:
     render_rules()  # Render the game rules expander at the top of the page
     st.markdown("---")  # Add a horizontal divider after the header section
 
-
 def init_session_state() -> None:
     """
     Initialize the Streamlit session state variables for the game.
@@ -47,22 +47,6 @@ def init_session_state() -> None:
 
 
 ### Rendering functions ###
-def refresh_app_rendering() -> None:
-    """Refresh the Streamlit app rendering to reflect changes in the game state."""
-    st.rerun()
-
-
-def render_current_turn(game: GameManager) -> None:
-    """
-    Render the current turn information at the top of the game screen.
-    
-    Args:
-        game (GameManager): The current game manager instance containing the game state.
-    """
-    if not game.is_game_over():
-        st.info(UI_MESSAGES["current_turn"] + f" **{game.get_current_player().name} ({game.get_current_player().symbol})**")
-
-
 def render_game() -> None:
     """
     Render the main game screen, including the current turn,
@@ -100,7 +84,6 @@ def handle_turn(game: GameManager, clicked_cell: tuple[int, int] | None) -> None
     elif clicked_cell:
         handle_human_turn(game, clicked_cell)
 
-
 def handle_ai_turn(game: GameManager) -> None:
     """
     Make AI play if it's AI's turn and the game is not over, then refresh the app rendering.
@@ -111,7 +94,6 @@ def handle_ai_turn(game: GameManager) -> None:
     sleep(AI_SLEEP_TIME)  # Simulate thinking time for the AI
     game.play_turn()  # Make AI play its turn (position is None, AI will choose its move)
     refresh_app_rendering()
-
 
 def handle_human_turn(game: GameManager, clicked_cell: tuple[int, int]) -> None:
     """
@@ -142,20 +124,10 @@ def start_game(human_symbol: str) -> None:
     # X always starts first, _define_starting_player handles this in GameManager
     st.session_state.game = GameManager(player_1, player_2, BOARD_SIZE, WIN_LENGTH)
 
-
-def is_game_in_progress() -> bool:
-    """Return True if a game is currently in progress, False otherwise."""
-    return game_exists() and not st.session_state.game.is_game_over()
-
-
-def game_exists() -> bool:
-    """Return True if a game exists in session state, False otherwise."""
-    return st.session_state.game is not None
-
-
 def should_start_new_game() -> bool:
     """Return True if the conditions to start a new game are met, False otherwise."""
     return st.session_state.options is not None and not is_game_in_progress()
+
 
 ### MAIN APP FUNCTION ###
 def main():
@@ -163,10 +135,11 @@ def main():
     Main function to run the Tic Tac Toe Game Streamlit app.
     """
     # Configure the main page and initialize session state variables
-    setup_main_page()
     init_session_state()
+    setup_main_page()
 
-    render_side_options(is_game_in_progress())  
+    render_side_options(is_game_in_progress())
+    render_game_status()
 
     if should_start_new_game():
         selected_symbol = st.session_state.options["player_symbol"]
@@ -175,14 +148,8 @@ def main():
         refresh_app_rendering()
         return
 
-    if not game_exists():
-        sty.text(UI_MESSAGES["choose_options"],
-                font_size="1.25rem", 
-                color="#6B7280"
-                )
-        return
-    
-    render_game()
+    if game_exists():
+        render_game()
 
 
 if __name__ == "__main__":

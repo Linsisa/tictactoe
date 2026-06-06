@@ -1,7 +1,9 @@
-"""File of the UI components for the Tic Tac Toe game, including the main game window"""
+"""File of the various UI components for the Tic Tac Toe game"""
 
 import streamlit as st
+import st_yled as sty
 
+from app_utils import game_exists, is_game_in_progress, refresh_app_rendering
 from config.settings import SYMBOL_X, SYMBOL_O
 from config.ui import BOARD_SYMBOLS, ICONS, UI_MESSAGES, GAME_RULES
 from core.game_manager import GameManager
@@ -14,6 +16,44 @@ def render_rules() -> None:
     """
     with st.expander(UI_MESSAGES["rules_expander"]):
         st.text(GAME_RULES.format(BOARD_SYMBOLS[SYMBOL_X], BOARD_SYMBOLS[SYMBOL_O], BOARD_SYMBOLS[SYMBOL_X]))
+
+
+### GAME STATUS RENDERING ###
+def render_game_status() -> None:
+    """
+    Render the current game status, (Selected options, game in progress, game over)
+    """
+    sty.init()
+    if not game_exists():
+        sty.text(UI_MESSAGES["choose_options"],
+                font_size="1.25rem", 
+                color="#6B7280"
+                )
+        return
+    
+    if is_game_in_progress():
+        sty.text(UI_MESSAGES["game_in_progress"],
+                font_size="1.25rem",
+                color="#6B7280"
+                )
+        return
+    
+    sty.text(UI_MESSAGES["game_over"],
+                font_size="1.25rem",
+                color="#6B7280"
+                )
+
+
+### CURRENT TURN RENDERING ###
+def render_current_turn(game: GameManager) -> None:
+    """
+    Render the current turn information at the top of the game screen.
+    
+    Args:
+        game (GameManager): The current game manager instance containing the game state.
+    """
+    if not game.is_game_over():
+        st.info(UI_MESSAGES["current_turn"] + f" **{game.get_current_player().name} ({game.get_current_player().symbol})**")
 
 
 ### GAME OVER SECTION RENDERING ###
@@ -32,4 +72,4 @@ def render_game_over(game: GameManager) -> None:
 
     if st.button(UI_MESSAGES["quick_restart"]):
         game.reset_game()
-        st.rerun()
+        refresh_app_rendering()
