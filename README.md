@@ -1,9 +1,6 @@
 # 🎮 Tic Tac Toe
 
-A classic Tic-Tac-Toe game built with Python and Streamlit.
-
 <!-- > 🚀 **Live Demo** : Try it now on **streamlit cloud**: [tictactoe](https://tictactoe-linsisa.streamlit.app/) -->
-
 
 ## 📋 Table of Contents
 
