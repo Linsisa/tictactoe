@@ -3,8 +3,8 @@
 import pytest
 
 from config.test_settings import BOARD_SIZE_TEST
-import core.rules as rules
 from core.board import Board
+import core.rules as rules
 
 
 class TestRules:
