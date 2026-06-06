@@ -2,8 +2,8 @@
 
 import streamlit as st
 
-from config.ui import BOARD_SYMBOLS, ICONS, UI_MESSAGES, GAME_RULES
 from config.settings import SYMBOL_X, SYMBOL_O
+from config.ui import BOARD_SYMBOLS, ICONS, UI_MESSAGES, GAME_RULES
 from core.game_manager import GameManager
 
 
@@ -96,7 +96,8 @@ def _get_layout_portion_for_columns(num_columns: int) -> tuple[int, int]:
     Returns:
         tuple[int, int]: A tuple containing the layout portion for the center column and the padding.
     """
-    padding = max(1, 8 - num_columns)  # Adjust padding based on the number of columns
+    max_padding = 12
+    padding = max(1, max_padding - num_columns)  # Adjust padding based on the number of columns
     return [padding, num_columns, padding]
 
 
@@ -122,6 +123,7 @@ def _render_board_grid(board: "Board", disable_cells: bool) -> tuple[int, int] |
                         label=cell_value,
                         key=f"cell_{row_idx}_{col_idx}",
                         disabled=disable_cells,
+                        width="stretch",
                         use_container_width=True
                     ):
                         clicked_cell = (row_idx, col_idx)
