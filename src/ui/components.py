@@ -3,10 +3,11 @@
 import streamlit as st
 import st_yled as sty
 
-from app_utils import game_exists, is_game_in_progress, refresh_app_rendering
+from app_utils import handle_turn, game_exists, is_game_in_progress, refresh_app_rendering
 from config.settings import SYMBOL_X, SYMBOL_O
 from config.ui import BOARD_SYMBOLS, ICONS, UI_MESSAGES, GAME_RULES
 from core.game_manager import GameManager
+from ui.board import render_board
 
 
 ### RULES RENDERING ###
@@ -18,7 +19,19 @@ def render_rules() -> None:
         st.text(GAME_RULES.format(BOARD_SYMBOLS[SYMBOL_X], BOARD_SYMBOLS[SYMBOL_O], BOARD_SYMBOLS[SYMBOL_X]))
 
 
-### GAME STATUS RENDERING ###
+### CURRENT TURN RENDERING ###
+def render_current_turn(game: GameManager) -> None:
+    """
+    Render the current turn information at the top of the game screen.
+    
+    Args:
+        game (GameManager): The current game manager instance containing the game state.
+    """
+    if not game.is_game_over():
+        st.info(UI_MESSAGES["current_turn"] + f" **{game.get_current_player().name} ({game.get_current_player().symbol})**")
+
+
+### GAME RENDERING ###
 def render_game_status() -> None:
     """
     Render the current game status, (Selected options, game in progress, game over)
@@ -43,20 +56,28 @@ def render_game_status() -> None:
                 color="#6B7280"
                 )
 
-
-### CURRENT TURN RENDERING ###
-def render_current_turn(game: GameManager) -> None:
+def render_game() -> None:
     """
-    Render the current turn information at the top of the game screen.
-    
-    Args:
-        game (GameManager): The current game manager instance containing the game state.
+    Render the main game screen, including the current turn,
+    the game board, and handle the game logic for both human and AI turns.
+    Also handles the end game screen when the game is over.
     """
-    if not game.is_game_over():
-        st.info(UI_MESSAGES["current_turn"] + f" **{game.get_current_player().name} ({game.get_current_player().symbol})**")
+    # Get the current game manager instance from session state
+    game: GameManager = st.session_state.game
+
+    # Display the current turn information at the top of the game screen
+    render_current_turn(game)
+
+    # Render the game board and get the position of the cell clicked by the user (if any)
+    clicked_cell = render_board(game)
+    handle_turn(game, clicked_cell)
+
+    # Check if game is over to render the end game screen with the result and the option to replay
+    if game.is_game_over():
+        render_game_over(game)
 
 
-### GAME OVER SECTION RENDERING ###
+### GAMEOVER SECTION RENDERING ###
 def render_game_over(game: GameManager) -> None:
     """
     Render the end game screen with the result of the game and the option to replay.

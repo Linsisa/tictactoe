@@ -57,17 +57,15 @@ def handle_turn(game: "GameManager", clicked_cell: tuple[int, int] | None) -> No
         clicked_cell (tuple[int, int] | None): The row and column indices of the cell clicked by the user, or None if no cell was clicked.
     """
     is_ai_turn = game.is_ai_input_allowed()
-    turn_handled = False
     
     if is_ai_turn:
         handle_ai_turn(game)
-        turn_handled = True
     elif clicked_cell:
         handle_human_turn(game, clicked_cell)
-        turn_handled = True
-
-    if turn_handled:
-        refresh_app_rendering()
+    else:
+        return
+    
+    refresh_app_rendering()
 
 def handle_ai_turn(game: "GameManager") -> None:
     """
