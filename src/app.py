@@ -61,8 +61,7 @@ def main():
         app_utils.refresh_app_rendering()
         return
 
-    if app_utils.game_exists():
-        render_game()
+    render_game()
 
 
 if __name__ == "__main__":

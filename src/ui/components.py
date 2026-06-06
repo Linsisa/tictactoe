@@ -62,21 +62,22 @@ def render_game() -> None:
     the game board, and handle the game logic for both human and AI turns.
     Also handles the end game screen when the game is over.
     """
-    # Get the current game manager instance from session state
-    game: GameManager = st.session_state.game
+    if game_exists():
+        # Get the current game manager instance from session state
+        game = st.session_state.game
 
-    # Display the current turn information at the top of the game screen
-    render_current_turn(game)
+        # Display the current turn information at the top of the game screen
+        render_current_turn(game)
 
-    # Render the game board and get the position of the cell clicked by the user (if any)
-    clicked_cell = render_board(game)
-    
-    if game.play_turn(clicked_cell):
-        refresh_app_rendering()
+        # Render the game board and get the position of the cell clicked by the user (if any)
+        clicked_cell = render_board(game)
+        
+        if game.play_turn(clicked_cell):
+            refresh_app_rendering()
 
-    # Check if game is over to render the end game screen with the result and the option to replay
-    if game.is_game_over():
-        render_game_over(game)
+        # Check if game is over to render the end game screen with the result and the option to replay
+        if game.is_game_over():
+            render_game_over(game)
 
 
 ### GAMEOVER SECTION RENDERING ###
