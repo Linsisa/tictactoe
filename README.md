@@ -128,8 +128,9 @@ tictactoe/
 │   │   ├── rules.py                   # Tic Tac Toe rules and win conditions
 │   │   └── strategies.py              # Players strategies (e.g., random AI)
 │   └── ui/
-│       ├── sidebar.py                 # Sidebar UI component
-│       └── components.py              # Streamlit UI components (game board, etc.)
+│       ├── board.py                   # Board rendering component
+│       ├── components.py              # Streamlit UI components
+│       └── sidebar.py                 # Sidebar UI component
 ├── tests/
 │   ├── test_board.py                  # Unit tests for board logic
 │   ├── test_game_manager.py           # Unit tests for game flow and state management
