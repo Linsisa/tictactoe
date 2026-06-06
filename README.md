@@ -122,11 +122,11 @@ tictactoe/
 │   │   ├── test_settings.py           # Test settings
 │   │   └── ui.py                      # UI configuration
 │   ├── core/
-│   │   ├── board.py                   # Game Board implementation
+│   │   ├── board.py                   # Game board implementation
 │   │   ├── game_manager.py            # Main game logic
 │   │   ├── player.py                  # Player implementation
 │   │   ├── rules.py                   # Tic Tac Toe rules and win conditions
-│   │   └── strategies.py              # Different player strategies (e.g., random AI)
+│   │   └── strategies.py              # Players strategies (e.g., random AI)
 │   └── ui/
 │       └── components.py              # Streamlit UI components (game board, sidebar, etc.)
 ├── tests/
