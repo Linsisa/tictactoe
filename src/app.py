@@ -9,7 +9,8 @@ from config.ui import HUMAN_PLAYER_NAME, AI_PLAYER_NAME, UI_MESSAGES, CUSTOM_CSS
 from core.game_manager import GameManager
 from core.player import Player
 from core.strategies import HumanStrategy, RandomAIStrategy
-from ui.components import render_rules, render_side_options, render_board, render_game_over
+from ui.components import render_rules, render_board, render_game_over
+from ui.sidebar import render_side_options
 
 
 ### Setup functions ###
