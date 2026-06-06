@@ -38,14 +38,12 @@ class TestStrategies:
 
         ai_chosen_move = strategy.get_move(self.board)
         
-        # Le coup doit être dans la liste des cases libres
         assert ai_chosen_move in free_cells
 
     def test_random_ai_strategy_only_one_choice_left(self):
         """Test that the random AI strategy picks the only remaining cell if the board is almost full."""
         strategy = RandomAIStrategy()
         
-        # Il ne reste que la case centrale (1, 1) de libre
         self.board.set_board(
             [['X', 'O', 'X'],
              ['O', None, 'O'],
@@ -59,7 +57,6 @@ class TestStrategies:
         """Test that the random AI strategy returns None if there are no free cells left."""
         strategy = RandomAIStrategy()
         
-        # Le plateau est plein, il n'y a plus de cases libres
         self.board.set_board(
             [['X', 'O', 'X'],
              ['O', 'X', 'O'],
