@@ -3,12 +3,9 @@
 import streamlit as st
 import st_yled as sty
 
-from app_utils import game_exists, is_game_in_progress, refresh_app_rendering, handle_turn
-from config.settings import BOARD_SIZE, WIN_LENGTH, SYMBOL_X, SYMBOL_O
-from config.ui import HUMAN_PLAYER_NAME, AI_PLAYER_NAME, UI_MESSAGES, CUSTOM_CSS
+import app_utils as app_utils
+from config.ui import UI_MESSAGES, CUSTOM_CSS
 from core.game_manager import GameManager
-from core.player import Player
-from core.strategies import HumanStrategy, RandomAIStrategy
 from ui.board import render_board
 from ui.components import render_rules, render_game_status, render_current_turn, render_game_over
 from ui.sidebar import render_side_options
@@ -60,33 +57,11 @@ def render_game() -> None:
 
     # Render the game board and get the position of the cell clicked by the user (if any)
     clicked_cell = render_board(game)
-    handle_turn(game, clicked_cell)
+    app_utils.handle_turn(game, clicked_cell)
 
     # Check if game is over to render the end game screen with the result and the option to replay
     if game.is_game_over():
         render_game_over(game)
-
-
-### Game functions ###
-def start_game(human_symbol: str) -> None:
-    """
-    Initialize the game with 2 players (human and AI) based on the symbol chosen by the user
-
-    Args:
-        human_symbol (str): The symbol chosen by the user for the human player.
-    """
-    ai_symbol = SYMBOL_O if human_symbol == SYMBOL_X else SYMBOL_X
-
-    # Create player instances
-    player_1 = Player(HUMAN_PLAYER_NAME, human_symbol, HumanStrategy())
-    player_2 = Player(AI_PLAYER_NAME,    ai_symbol,    RandomAIStrategy())
-
-    # X always starts first, _define_starting_player handles this in GameManager
-    st.session_state.game = GameManager(player_1, player_2, BOARD_SIZE, WIN_LENGTH)
-
-def should_start_new_game() -> bool:
-    """Return True if the conditions to start a new game are met, False otherwise."""
-    return st.session_state.options is not None and not is_game_in_progress()
 
 
 ### MAIN APP FUNCTION ###
@@ -98,17 +73,17 @@ def main():
     init_session_state()
     setup_main_page()
 
-    render_side_options(is_game_in_progress())
+    render_side_options(app_utils.is_game_in_progress())
     render_game_status()
 
-    if should_start_new_game():
+    if app_utils.should_start_new_game():
         selected_symbol = st.session_state.options["player_symbol"]
         st.session_state.options = None
-        start_game(selected_symbol)
-        refresh_app_rendering()
+        app_utils.create_game(selected_symbol)
+        app_utils.refresh_app_rendering()
         return
 
-    if game_exists():
+    if app_utils.game_exists():
         render_game()
 
 
