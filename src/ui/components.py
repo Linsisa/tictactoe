@@ -4,7 +4,7 @@ import streamlit as st
 import st_yled as sty
 
 from app_utils import game_exists, is_game_in_progress, refresh_app_rendering
-from config.settings import SYMBOL_X, SYMBOL_O
+from config.settings import SYMBOL_X, SYMBOL_O, VICTORY, DRAW
 from config.ui import BOARD_SYMBOLS, ICONS, UI_MESSAGES, GAME_RULES
 from core.game_manager import GameManager
 from ui.board import render_board
@@ -89,10 +89,10 @@ def render_game_over(game: GameManager) -> None:
         game (GameManager): The current game manager instance containing the game state.
     """
     if game.get_winner() is not None:
-        success_message = UI_MESSAGES["victory"].format(game.get_winner().name, game.get_winner().symbol)
-        st.success(success_message, icon=ICONS["victory"])
+        success_message = UI_MESSAGES[VICTORY].format(game.get_winner().name, game.get_winner().symbol)
+        st.success(success_message, icon=ICONS[VICTORY])
     else:
-        st.info(UI_MESSAGES["draw"], icon=ICONS["draw"])
+        st.info(UI_MESSAGES[DRAW], icon=ICONS[DRAW])
 
     if st.button(UI_MESSAGES["quick_restart"]):
         game.reset_game()

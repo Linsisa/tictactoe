@@ -8,4 +8,5 @@ SYMBOL_X = "X"
 SYMBOL_O = "O"
 EMPTY_CELL = None
 
-AVAILABLE_SYMBOLS = (SYMBOL_X, SYMBOL_O)
+VICTORY = "victory"
+DRAW = "draw"

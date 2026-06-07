@@ -1,17 +1,17 @@
 """File containing UI configuration constants for the Streamlit app."""
 
-from config.settings import EMPTY_CELL
+from config.settings import SYMBOL_X, SYMBOL_O, EMPTY_CELL, VICTORY, DRAW
 
 
 BOARD_SYMBOLS = {
-    "X": "❌", # Cross symbol for player X
-    "O": "⭕", # Circle symbol for player O
+    SYMBOL_X: "❌", # Cross symbol for player X
+    SYMBOL_O: "⭕", # Circle symbol for player O
     EMPTY_CELL: "➖" # Dash symbol for empty cells
 }
 
 ICONS = {
-    "victory": "🏆",
-    "draw": "🤝",
+    VICTORY: "🏆",
+    DRAW: "🤝",
 }
 
 HUMAN_PLAYER_NAME = "You"
@@ -30,8 +30,8 @@ UI_MESSAGES = {
     "symbol_options": "Symbol options:",
     "symbol_info": "Symbol {} starts first.",
     "current_turn": "Current turn:",
-    "draw": "It's a draw!",
-    "victory": "{} wins! Symbol: {}",
+    VICTORY: "{} wins! Symbol: {}",
+    DRAW: "It's a draw!",
     "launch": "Launch Game",
     "quick_restart": "↻ Quick Restart",
     "options_title": "⚙️ Game Options"
