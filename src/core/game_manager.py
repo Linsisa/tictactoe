@@ -20,23 +20,23 @@ class GameManager:
             win_length (int): The number of consecutive symbols needed to win (e.g., 3 for standard Tic Tac Toe).
         """
         self.players = [player1, player2]
-        self.board = Board(board_size)
-        self.win_length = win_length
-        self.current_player_index = self._define_starting_player()
-        self.winner: Player | None = None
+        self._board = Board(board_size)
+        self._win_length = win_length
+        self._current_player_index = self._define_starting_player()
+        self._winner: Player | None = None
         self.game_over = False
-        self.last_move: tuple[int, int] | None = None
+        self._last_move: tuple[int, int] | None = None
 
-        if self.win_length > self.board.size:
-            raise ValueError(f"win_length ({self.win_length}) cannot exceed board_size ({self.board.size})")
+        if self._win_length > self._board.size:
+            raise ValueError(f"win_length ({self._win_length}) cannot exceed board_size ({self._board.size})")
 
     def reset_game(self):
         """Reset the game to its initial state."""
-        self.board.reset_board()
-        self.current_player_index = self._define_starting_player()
-        self.winner = None
+        self._board.reset_board()
+        self._current_player_index = self._define_starting_player()
+        self._winner = None
         self.game_over = False
-        self.last_move = None
+        self._last_move = None
 
     def play_turn(self, position: tuple[int, int] | None = None) -> bool:
         """
@@ -55,32 +55,32 @@ class GameManager:
             return False
 
         player = self.get_current_player()
-        move = player.get_move(self.board, position)
+        move = player.get_move(self._board, position)
         
         # After move is selected, apply it to the board.
-        success = self.board.apply_move(move, player.symbol) if move is not None else False
+        success = self._board.apply_move(move, player.symbol) if move is not None else False
         if not success:
             return False
 
         # If the move was successful, we update the last move and check for win/draw conditions.
-        self.last_move = move
+        self._last_move = move
         self._after_turn()
         return True
         
     def _after_turn(self) -> None:
         """Method to be called after each turn to update the game state, check for win/draw conditions."""
-        if self.last_move is None:
+        if self._last_move is None:
             return
 
         # Check whether the last move created a winner.
-        winner_symbol = check_winner(self.board, self.last_move, self.win_length)
+        winner_symbol = check_winner(self._board, self._last_move, self._win_length)
         if winner_symbol:
-            self.winner = self.get_current_player()
+            self._winner = self.get_current_player()
             self.game_over = True
             return
         
         # If there is no winner, check for a draw.
-        if check_draw(self.board, self.last_move, self.win_length):
+        if check_draw(self._board, self._last_move, self._win_length):
             self.game_over = True
             return
         
@@ -89,31 +89,51 @@ class GameManager:
 
     def get_current_board_state(self) -> list[list[str | None]]:
         """Return the current state of the board as a 2D list."""
-        return self.board.get_current_board()
+        return self._board.get_current_board()
+    
+    def get_board_cell(self, row: int, col: int) -> str | None:
+        """Return the value of a specific cell on the board."""
+        return self._board.get_cell(row, col)
+    
+    def _set_board(self, new_board: list[list[str | None]]) -> None:
+        """Set the board to a new state (used for testing purposes)."""
+        self._board.set_board(new_board)
     
     def get_current_player(self) -> Player:
         """Return the current player."""
-        return self.players[self.current_player_index]
+        return self.players[self._current_player_index]
+    
+    def get_current_player_index(self) -> int:
+        """Return the index of the current player (0 or 1)."""
+        return self._current_player_index
     
     def is_human_input_allowed(self) -> bool:
         """Determine if human input is allowed based on the current game state and player type."""
-        return not self.game_over and self.players[self.current_player_index].strategy.is_human
+        return not self.game_over and self.players[self._current_player_index].strategy.is_human
 
     def is_game_over(self) -> bool:
         """Return True if the game is over, False otherwise."""
         return self.game_over
     
-    def is_winner(self) -> bool:
-        """Return True if there is a winner, False otherwise."""
-        return self.winner is not None
-    
     def get_winner(self) -> Player | None:
         """Return the winner of the game, or None if there is no winner."""
-        return self.winner
+        return self._winner
+    
+    def _set_winner(self, player_index: int) -> None:
+        """Set the winner of the game (used for testing purposes)."""
+        self._winner = self.players[player_index]
+
+    def get_last_move(self) -> tuple[int, int] | None:
+        """Return the last move made in the game, or None if no moves have been made."""
+        return self._last_move
+    
+    def _set_last_move(self, move: tuple[int, int]) -> None:
+        """Set the last move made in the game (used for testing purposes)."""
+        self._last_move = move
 
     def _switch_player(self) -> None:
         """Switch the current player to the other player."""
-        self.current_player_index = 1 - self.current_player_index
+        self._current_player_index = 1 - self._current_player_index
 
     def _define_starting_player(self) -> int:
         """Select the player with the 'X' symbol as the starting player."""
