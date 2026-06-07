@@ -109,7 +109,7 @@ class GameManager:
     
     def is_human_input_allowed(self) -> bool:
         """Determine if human input is allowed based on the current game state and player type."""
-        return not self.game_over and self.players[self._current_player_index].strategy.is_human
+        return not self.game_over and self.players[self._current_player_index].strategy.is_human_player()
 
     def is_game_over(self) -> bool:
         """Return True if the game is over, False otherwise."""
