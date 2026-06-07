@@ -19,7 +19,9 @@ class Strategy(ABC):
 
 class HumanStrategy(Strategy):
     """
-    Strategy for a human player. Returns None; move is handled by UI.
+    Strategy for a human player, move is retrieved from the UI. 
+    Returns None when the user has not clicked on a cell, 
+    else returns the position of the clicked cell.
 
     Returns:
         None: The actual move will come from the UI, so this strategy returns None.
