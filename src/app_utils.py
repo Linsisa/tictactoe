@@ -2,7 +2,7 @@
 
 import streamlit as st
 
-from config.settings import BOARD_SIZE, WIN_LENGTH, SYMBOL_X, SYMBOL_O, AI_SLEEP_TIME
+from config.settings import BOARD_SIZE, WIN_LENGTH, SYMBOL_X, SYMBOL_O
 from config.ui import HUMAN_PLAYER_NAME, AI_PLAYER_NAME
 from core.game_manager import GameManager
 from core.player import Player
