@@ -27,8 +27,8 @@ class GameManager:
         self.game_over = False
         self._last_move: tuple[int, int] | None = None
 
-        if self._win_length > self._board.size:
-            raise ValueError(f"win_length ({self._win_length}) cannot exceed board_size ({self._board.size})")
+        if self._win_length > self._board.get_size():
+            raise ValueError(f"win_length ({self._win_length}) cannot exceed board_size ({self._board.get_size()})")
 
     def reset_game(self):
         """Reset the game to its initial state."""

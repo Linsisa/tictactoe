@@ -11,12 +11,12 @@ class Board:
         if size < 1:
             raise ValueError("Board size must be positive.")
 
-        self.size = size
+        self._size = size
         self.reset_board()
 
     def reset_board(self) -> None:
         """Reset the game board to its initial empty state."""
-        self._board: list[list[str | None]] = [[EMPTY_CELL for _ in range(self.size)] for _ in range(self.size)]
+        self._board: list[list[str | None]] = [[EMPTY_CELL for _ in range(self._size)] for _ in range(self._size)]
     
     def set_board(self, new_board: list[list[str | None]]) -> None:
         """Set the board to a new state (used for testing purposes)."""
@@ -39,6 +39,10 @@ class Board:
             self._board[row][col] = symbol
             return True
         return False
+    
+    def get_size(self) -> int:
+        """Return the size of the board."""
+        return self._size
 
     def get_current_board(self) -> list[list[str | None]]:
         """Return the current state of the board."""
@@ -64,4 +68,4 @@ class Board:
     def is_position_in_bounds(self, position: tuple[int, int]) -> bool:
         """Check if a given position is within the bounds of the board."""
         row, col = position
-        return 0 <= row < self.size and 0 <= col < self.size
+        return 0 <= row < self._size and 0 <= col < self._size
